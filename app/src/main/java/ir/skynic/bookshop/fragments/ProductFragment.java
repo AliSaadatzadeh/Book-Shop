@@ -3,6 +3,7 @@ package ir.skynic.bookshop.fragments;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,9 @@ public class ProductFragment extends Fragment {
     private TextView txtPublisher;
     private TextView txtPublicationYear;
     private TextView txtDate;
-    
+    private ViewGroup addRemoveCart;
+    private TextView txtAddRemoveCart;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -64,10 +67,6 @@ public class ProductFragment extends Fragment {
             MainActivity.showFragment(getActivity(), new CommentsFragment());
         });
 
-        mView.findViewById(R.id.btnAddRemoveCart).setOnClickListener(view -> {
-            Configuration.addToCart(model);
-        });
-
         txtTile = mView.findViewById(R.id.txtTitle);
         txtDescription = mView.findViewById(R.id.txtDescription);
         txtPrice = mView.findViewById(R.id.txtPrice);
@@ -81,6 +80,28 @@ public class ProductFragment extends Fragment {
         txtPublisher = mView.findViewById(R.id.txtPublisher);
         txtPublicationYear = mView.findViewById(R.id.txtPublicationYear);
         txtDate = mView.findViewById(R.id.txtDate);
+        txtAddRemoveCart = mView.findViewById(R.id.txtAddRemoveCart);
+        addRemoveCart = mView.findViewById(R.id.btnAddRemoveCart);
+
+        if (Configuration.isCartExist(model)) {
+            addRemoveCart.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.finalize_cart_background));
+            txtAddRemoveCart.setText("از سبد خرید حذف کن");
+        } else {
+            addRemoveCart.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.add_to_cart_background));
+            txtAddRemoveCart.setText("به سبد خرید اضافه کن");
+        }
+
+        addRemoveCart.setOnClickListener(view -> {
+            if (Configuration.isCartExist(model)) {
+                Configuration.removeFromCart(model);
+                addRemoveCart.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.add_to_cart_background));
+                txtAddRemoveCart.setText("به سبد خرید اضافه کن");
+            } else {
+                Configuration.addToCart(model);
+                addRemoveCart.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.finalize_cart_background));
+                txtAddRemoveCart.setText("از سبد خرید حذف کن");
+            }
+        });
 
         showInformation();
     }
