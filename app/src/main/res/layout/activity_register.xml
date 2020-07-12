@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#FFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="-1dp"
+                android:layout_marginRight="-1dp"
+                android:layout_marginTop="-1dp"
+                android:background="@drawable/navigation_bar_background"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp">
+
+                <Button
+                    android:id="@+id/btnSubmit"
+                    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/irfont"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:padding="5dp"
+                    android:text="تایید"
+                    android:textColor="#095bbf"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/irfont"
+                    android:text="ایجاد حساب کاربری"
+                    android:textColor="@color/colorForeground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="invisible" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/crdProfile"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    app:cardCornerRadius="50dp">
+
+                    <ImageView
+                        android:id="@+id/imgProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/seller" />
+
+                </android.support.v7.widget.CardView>
+
+                <Button
+                    android:id="@+id/btnSelectImage"
+                    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/crdProfile"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/irfont"
+                    android:text="انتخاب عکس"
+                    android:textAllCaps="false"
+                    android:textColor="#095bbf" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:background="#EEE" />
+
+            <EditText
+                android:id="@+id/edtName"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_toRightOf="@+id/btnFilter"
+                android:background="@drawable/textfiled_background"
+                android:ems="10"
+                android:fontFamily="@font/irfont"
+                android:hint="نام کامل شما"
+                android:inputType="text"
+                android:layoutDirection="rtl"
+                android:maxLength="50"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:textColorHint="#AAA">
+
+                <requestFocus />
+            </EditText>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edtUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@+id/btnFilter"
+                    android:background="@drawable/textfiled_background"
+                    android:ems="10"
+                    android:fontFamily="@font/irfont"
+                    android:hint="انتخاب نام کاربری"
+                    android:inputType="text"
+                    android:layoutDirection="ltr"
+                    android:maxLength="32"
+                    android:paddingLeft="28dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textColorHint="#AAA" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="@font/irfont"
+                    android:text="@"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:background="#EEE" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/txtCitySelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@+id/btnFilter"
+                    android:background="@drawable/textfiled_background"
+                    android:ems="10"
+                    android:fontFamily="@font/irfont"
+                    android:gravity="center_vertical"
+                    android:hint="شهر"
+                    android:inputType="text"
+                    android:layoutDirection="rtl"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textColorHint="#AAA"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="●●●"
+                    android:textColor="@color/colorForeground" />
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/edtAddress"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_toRightOf="@+id/btnFilter"
+                android:background="@drawable/textfiled_background"
+                android:ems="10"
+                android:fontFamily="@font/irfont"
+                android:hint="آدرس"
+                android:inputType="text"
+                android:layoutDirection="rtl"
+                android:maxLength="200"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:textColorHint="#AAA" />
+
+            <EditText
+                android:id="@+id/edtPostalCode"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_toRightOf="@+id/btnFilter"
+                android:background="@drawable/textfiled_background"
+                android:ems="10"
+                android:fontFamily="@font/irfont"
+                android:hint="کد پستی ده رقمی"
+                android:inputType="number"
+                android:layoutDirection="ltr"
+                android:maxLength="10"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textColorHint="#AAA" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:background="#EEE" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/edtShabaCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@+id/btnFilter"
+                    android:background="@drawable/textfiled_background"
+                    android:ems="10"
+                    android:fontFamily="@font/irfont"
+                    android:hint="شماره شبا"
+                    android:inputType="number"
+                    android:layoutDirection="ltr"
+                    android:maxLength="24"
+                    android:paddingLeft="32dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textAlignment="textStart"
+                    android:textColorHint="#AAA" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="@font/irfont"
+                    android:text="IR-"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

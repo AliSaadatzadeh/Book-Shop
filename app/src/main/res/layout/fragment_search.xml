@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9F9"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/navBottom"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/navigation_bar_background"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="-1dp"
+                    android:layout_marginRight="-1dp"
+                    android:layout_marginTop="-1dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp">
+
+                    <EditText
+                        android:id="@+id/edtSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_toRightOf="@+id/btnFilter"
+                        android:background="@drawable/textfiled_background"
+                        android:ems="10"
+                        android:fontFamily="@font/irfont"
+                        android:hint="چیزی برای جستجو تایپ کنید..."
+                        android:imeOptions="actionSearch"
+                        android:inputType="textAutoComplete"
+                        android:layoutDirection="rtl"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="35dp"
+                        android:singleLine="true"
+                        android:textColorHint="#AAA" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="55dp"
+                        android:layout_alignEnd="@+id/edtSearch"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="10dp"
+                        android:tint="#AAA"
+                        app:srcCompat="@drawable/magnifer" />
+
+                    <ImageView
+                        android:id="@+id/btnFilter"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/ripple_background"
+                        android:clickable="true"
+                        android:padding="15dp"
+                        android:tint="@color/colorForeground"
+                        app:srcCompat="@drawable/filter" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignStart="@+id/edtSearch"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="4dp"
+                        android:visibility="invisible" />
+
+                    <ImageView
+                        android:id="@+id/btnClearKeyword"
+                        android:layout_width="25dp"
+                        android:layout_height="55dp"
+                        android:layout_alignStart="@+id/edtSearch"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="4dp"
+                        android:background="@drawable/ripple_background"
+                        android:clickable="true"
+                        android:padding="4dp"
+                        android:tint="#ff9696"
+                        android:visibility="invisible"
+                        app:srcCompat="@drawable/cross" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rltFiltersContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="-4dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:id="@+id/btnClearFilters"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/ripple_background"
+                        android:clickable="true"
+                        android:fontFamily="@font/irfont"
+                        android:layoutDirection="rtl"
+                        android:text="حذف فیلترها"
+                        android:textColor="#0063af"
+                        android:textDirection="rtl"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layoutDirection="rtl">
+
+                        <TextView
+                            android:id="@+id/txtSelectedCategory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:background="@drawable/filter_item_background"
+                            android:fontFamily="@font/irfont"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="12dp"
+                            android:paddingRight="12dp"
+                            android:paddingTop="4dp"
+                            android:text="دسته بندی: رمان"
+                            android:textColor="@color/colorForeground"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txtSelectedCity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/filter_item_background"
+                            android:fontFamily="@font/irfont"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="12dp"
+                            android:paddingRight="12dp"
+                            android:paddingTop="4dp"
+                            android:text="شهر: ارومیه"
+                            android:textColor="@color/colorForeground"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnrProductContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/inflate_list_product_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    layout="@layout/inflate_list_product_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    layout="@layout/inflate_list_product_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    layout="@layout/inflate_list_product_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    layout="@layout/inflate_list_product_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    layout="@layout/inflate_list_product_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    layout="@layout/inflate_list_product_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
