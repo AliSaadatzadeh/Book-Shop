@@ -77,6 +77,11 @@ public class SplashActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
     }
 
+    void test()
+    {
+
+    }
+
     private void startNextActivity() {
         if(Configuration.getUsername(this) != null)
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
@@ -84,5 +89,6 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
 
         finish();
+        test();
     }
 }
