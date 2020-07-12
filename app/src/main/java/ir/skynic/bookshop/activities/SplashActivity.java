@@ -76,7 +76,11 @@ public class SplashActivity extends AppCompatActivity {
         lnrErrorContainer.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
     }
+
+    void xx() {
     
+    }
+
     private void startNextActivity() {
         if(Configuration.getUsername(this) != null)
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
