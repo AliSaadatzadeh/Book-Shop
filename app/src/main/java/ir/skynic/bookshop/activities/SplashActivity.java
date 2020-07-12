@@ -75,6 +75,8 @@ public class SplashActivity extends AppCompatActivity {
     private void showErrorIndicators() {
         lnrErrorContainer.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
+
+        //kjgigguygfgtyfyuh
     }
 
     void xx() {
