@@ -34,27 +34,28 @@ public class BookView extends FrameLayout {
     public BookView(Context context, ViewSize viewSize, Book model) {
         super(context);
 
-        if(viewSize == ViewSize.SMALL)
+        if(viewSize == ViewSize.SMALL) {
             inflate(context, R.layout.inflate_list_product_container, this);
-        else if(viewSize == ViewSize.LARGE)
+        } else if(viewSize == ViewSize.LARGE) {
             inflate(context, R.layout.inflate_list_product_item, this);
+            txtDescription = findViewById(R.id.txtDescription);
+            txtCategory = findViewById(R.id.txtCategory);
+            txtStatus = findViewById(R.id.txtStatus);
+
+            txtDescription.setText(model.getDescription());
+            String category = (String) Configuration.getCategories().get(model.getCategoryId());
+            txtCategory.setText("در دسته" + "\"" + String.valueOf(category) + "\"");
+
+            if(model.getBookStatus() != 1)
+                txtStatus.setVisibility(INVISIBLE);
+        }
 
         txtTile = findViewById(R.id.txtTitle);
-        txtDescription = findViewById(R.id.txtDescription);
         txtPrice = findViewById(R.id.txtPrice);
-        txtCategory = findViewById(R.id.txtCategory);
-        txtStatus = findViewById(R.id.txtStatus);
         txtOff = findViewById(R.id.txtOff);
         imgProduct = findViewById(R.id.imgProduct);
-
         txtTile.setText(model.getTitle());
-        txtDescription.setText(model.getDescription());
         txtPrice.setText(new DecimalFormat("#,###").format(model.getPrice()));
-        String category = (String) Configuration.getCategories().get(model.getCategoryId());
-        txtCategory.setText("در دسته" + "\"" + String.valueOf(category) + "\"");
-
-        if(model.getBookStatus() != 1)
-            txtStatus.setVisibility(INVISIBLE);
 
         if(model.getOff() > 0) {
             txtOff.setText(model.getOff() + "%");
