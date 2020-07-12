@@ -91,14 +91,6 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public void showProduct(View v) {
-        showFragment(this, new ProductFragment());
-    }
-
-    public void showUser(View v) {
-        showFragment(this, new UserProfileFragment());
-    }
-
     @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() == 0) {

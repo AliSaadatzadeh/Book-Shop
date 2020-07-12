@@ -43,7 +43,7 @@ public class UserView extends FrameLayout {
 
         setOnClickListener(view -> {
             UserProfileFragment userProfileFragment = new UserProfileFragment();
-            //productFragment.setModel(model);
+            userProfileFragment.setModel(model);
             MainActivity.showFragment((Activity)context, userProfileFragment);
         });
     }

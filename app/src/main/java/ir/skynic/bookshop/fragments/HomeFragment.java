@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.Map;
 
 import ir.skynic.bookshop.Configuration;
 import ir.skynic.bookshop.Utils;
-import ir.skynic.bookshop.activities.MainActivity;
 import ir.skynic.bookshop.R;
 import ir.skynic.bookshop.api.ApiClient;
 import ir.skynic.bookshop.model.Book;
@@ -40,15 +38,6 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-//        mView = inflater.inflate(R.layout.fragment_home, null);
-//        mView.findViewById(R.id.btnProfile).setOnClickListener(view -> {
-//            UserProfileFragment userProfileFragment = new UserProfileFragment();
-//            MainActivity.showFragment(getActivity(), userProfileFragment);
-//        });
-//
-//        return mView;
-
         mView = inflater.inflate(R.layout.fragment_home, null);
 
         initUi();
@@ -79,25 +68,6 @@ public class HomeFragment extends Fragment {
 
             } catch (Exception ignored) {}
         }).start();
-
-
-//        ApiClient.getModel(viewRequest, "view", Book.class, o -> {
-//            if(o != null) {
-//
-//                List<Book> bookList = (List) o[1];
-//
-//                new Thread(() -> {
-//                    try {
-//                        Bitmap bitmap = Utils.getImageFromUrl(model.getThumbnailImageLink());
-//                        Utils.runOnMainThread(() -> imageView.setImageBitmap(bitmap));
-//                    } catch (Exception ignored) {}
-//                }).start();
-//
-//            } else {
-//                Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
 
         String disCountedRequest[] = {"get-dis-counted", Configuration.getUsername(getActivity()), "30"};
         ApiClient.getModel(disCountedRequest, "book", Book.class, o -> {
@@ -163,15 +133,7 @@ public class HomeFragment extends Fragment {
             int key = (int) o;
             String value = (String) categories.get(key);
 
-            CategoryView categoryView = new CategoryView(getActivity(), CategoryView.ViewSize.SMALL, value);
-            categoryView.setOnClickListener(view -> {
-
-                SearchFragment searchFragment = new SearchFragment();
-                searchFragment.clearFilters();
-                searchFragment.setCategory(key);
-
-                MainActivity.showFragment(HomeFragment.this.getActivity(), searchFragment);
-            });
+            CategoryView categoryView = new CategoryView(getActivity(), CategoryView.ViewSize.SMALL, value, key);
 
             categoryContainer.addView(categoryView);
         }

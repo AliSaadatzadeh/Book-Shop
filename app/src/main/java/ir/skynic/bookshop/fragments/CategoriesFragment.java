@@ -14,6 +14,7 @@ import ir.skynic.bookshop.Configuration;
 import ir.skynic.bookshop.R;
 import ir.skynic.bookshop.RunnableParam;
 import ir.skynic.bookshop.activities.MainActivity;
+import ir.skynic.bookshop.model.Category;
 import ir.skynic.bookshop.view.CategoryView;
 
 public class CategoriesFragment extends Fragment {
@@ -36,22 +37,12 @@ public class CategoriesFragment extends Fragment {
         ViewGroup lnrContainer = mView.findViewById(R.id.lnrContainer);
         lnrContainer.removeAllViews();
 
-
         Map categories = Configuration.getCategories();
         for (Object o : categories.keySet()) {
             int key = (int) o;
             String value = (String) categories.get(key);
 
-            CategoryView categoryView = new CategoryView(getActivity(), CategoryView.ViewSize.LARGE, value);
-            categoryView.setOnClickListener(view -> {
-
-                SearchFragment searchFragment = new SearchFragment();
-                searchFragment.clearFilters();
-                searchFragment.setCategory(key);
-
-                MainActivity.showFragment(CategoriesFragment.this.getActivity(), searchFragment);
-            });
-
+            CategoryView categoryView = new CategoryView(getActivity(), CategoryView.ViewSize.LARGE, value, key);
             lnrContainer.addView(categoryView);
         }
     }
