@@ -20,7 +20,7 @@ import ir.skynic.bookshop.model.Book;
 
 public class BookView extends FrameLayout {
 
-    public enum ViewSize {SMALL, LARGE}
+    public enum ViewSize {SMALL, LARGE, CART}
 
     private TextView txtTile;
     private TextView txtDescription;
@@ -29,6 +29,8 @@ public class BookView extends FrameLayout {
     private TextView txtStatus;
     private TextView txtOff;
     private ImageView imgProduct;
+    private TextView txtCity;
+    private ImageView btnDelete;
 
 
     public BookView(Context context, ViewSize viewSize, Book model) {
@@ -36,11 +38,23 @@ public class BookView extends FrameLayout {
 
         if(viewSize == ViewSize.SMALL) {
             inflate(context, R.layout.inflate_list_product_container, this);
+            txtOff = findViewById(R.id.txtOff);
+
+            if(model.getOff() > 0) {
+                txtOff.setText(model.getOff() + "%");
+                txtOff.setVisibility(VISIBLE);
+            }
         } else if(viewSize == ViewSize.LARGE) {
             inflate(context, R.layout.inflate_list_product_item, this);
             txtDescription = findViewById(R.id.txtDescription);
             txtCategory = findViewById(R.id.txtCategory);
             txtStatus = findViewById(R.id.txtStatus);
+            txtOff = findViewById(R.id.txtOff);
+
+            if(model.getOff() > 0) {
+                txtOff.setText(model.getOff() + "%");
+                txtOff.setVisibility(VISIBLE);
+            }
 
             txtDescription.setText(model.getDescription());
             String category = (String) Configuration.getCategories().get(model.getCategoryId());
@@ -48,19 +62,21 @@ public class BookView extends FrameLayout {
 
             if(model.getBookStatus() != 1)
                 txtStatus.setVisibility(INVISIBLE);
+        } else if (viewSize == viewSize.CART ) {
+            inflate(context, R.layout.inflate_list_cart_item, this);
+
+            btnDelete = findViewById(R.id.btnDelete);
+            txtCity = findViewById(R.id.txtCity);
+
+            txtCity.setText("ارسال از \"" + Configuration.getCities().get(model.getCityId()) + "\"");
         }
 
         txtTile = findViewById(R.id.txtTitle);
         txtPrice = findViewById(R.id.txtPrice);
-        txtOff = findViewById(R.id.txtOff);
         imgProduct = findViewById(R.id.imgProduct);
+
         txtTile.setText(model.getTitle());
         txtPrice.setText(new DecimalFormat("#,###").format(model.getPrice()));
-
-        if(model.getOff() > 0) {
-            txtOff.setText(model.getOff() + "%");
-            txtOff.setVisibility(VISIBLE);
-        }
 
         new Thread(() -> {
             try {
@@ -74,6 +90,12 @@ public class BookView extends FrameLayout {
             productFragment.setModel(model);
             MainActivity.showFragment((Activity)context, productFragment);
         });
+    }
+
+    public void setBtnDeleteListener(OnClickListener clickListener) {
+        if (btnDelete != null) {
+            btnDelete.setOnClickListener(clickListener);
+        }
     }
 
 
