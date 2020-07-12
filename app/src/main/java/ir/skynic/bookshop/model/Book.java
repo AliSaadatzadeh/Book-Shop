@@ -13,6 +13,7 @@ public class Book {
     private int publicationYear;
     private String description;
     private String imageLink;
+    private String thumbnailImageLink;
     private int bookStatus;
     private int off;
     private String seller;
@@ -61,6 +62,10 @@ public class Book {
 
     public String getImageLink() {
         return imageLink;
+    }
+
+    public String getThumbnailImageLink() {
+        return thumbnailImageLink;
     }
 
     public int getBookStatus() {

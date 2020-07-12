@@ -63,7 +63,7 @@ public class BookView extends FrameLayout {
 
         new Thread(() -> {
             try {
-                Bitmap bitmap = Utils.getImageFromUrl(model.getImageLink());
+                Bitmap bitmap = Utils.getImageFromUrl(model.getThumbnailImageLink());
                 Utils.runOnMainThread(() -> imgProduct.setImageBitmap(bitmap));
             } catch (Exception ignored) {}
         }).start();
