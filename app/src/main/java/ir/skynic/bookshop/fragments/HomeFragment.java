@@ -22,7 +22,7 @@ public class HomeFragment extends Fragment {
     private View mView;
 
     private ViewGroup productContainer;
-    private ViewGroup UserContainer;
+    private ViewGroup userContainer;
     private ViewGroup newProductContainer;
     private ViewGroup categoryContainer;
 
@@ -60,14 +60,11 @@ public class HomeFragment extends Fragment {
                     productContainer.addView(bookView);
                 }
 
+                productContainer.setVisibility(View.VISIBLE);
+
             } else {
                 Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
             }
-
-//            progressBar.setVisibility(View.INVISIBLE);
-
-//            if(searchKeyword.length() > 0)
-//                btnClearKeyword.setVisibility(View.VISIBLE);
         });
 
         String newProductRequest[] = {"get-book", Configuration.getUsername(getActivity())};
@@ -82,22 +79,21 @@ public class HomeFragment extends Fragment {
                     BookView bookView = new BookView(getActivity(), BookView.ViewSize.SMALL, book);
                     newProductContainer.addView(bookView);
                 }
-
+                newProductContainer.setVisibility(View.VISIBLE);
             } else {
                 Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
             }
-
-//            progressBar.setVisibility(View.INVISIBLE);
-
-//            if(searchKeyword.length() > 0)
-//                btnClearKeyword.setVisibility(View.VISIBLE);
         });
     }
 
     private void initUi() {
         productContainer = mView.findViewById(R.id.lnrProductContainer);
-        UserContainer = mView.findViewById(R.id.lnrUserContainer);
+        productContainer.setVisibility(View.GONE);
+        userContainer = mView.findViewById(R.id.lnrUserContainer);
+//        userContainer.setVisibility(View.GONE);
         newProductContainer = mView.findViewById(R.id.lnrNewProductContainer);
+        newProductContainer.setVisibility(View.GONE);
         categoryContainer = mView.findViewById(R.id.lnrCategoryContainer);
+//        categoryContainer.setVisibility(View.GONE);
     }
 }

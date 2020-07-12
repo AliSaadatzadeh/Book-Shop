@@ -44,6 +44,7 @@
             </android.support.v7.widget.CardView>
 
             <RelativeLayout
+                android:id="@+id/relProductContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp">
@@ -112,8 +113,8 @@
             </RelativeLayout>
 
 
-
             <RelativeLayout
+                android:id="@+id/relUserContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp">
@@ -132,13 +133,13 @@
                     android:textStyle="bold" />
 
                 <HorizontalScrollView
-                    android:id="@+id/lnrUserContainer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/txtBestSeller"
                     android:layoutDirection="rtl">
 
                     <LinearLayout
+                        android:id="@+id/lnrUserContainer"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -196,6 +197,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/relNewProductContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp">
@@ -264,6 +266,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/relCategoryContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

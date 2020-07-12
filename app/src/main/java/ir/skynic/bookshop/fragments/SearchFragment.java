@@ -23,7 +23,6 @@ import ir.skynic.bookshop.activities.MainActivity;
 import ir.skynic.bookshop.R;
 import ir.skynic.bookshop.api.ApiClient;
 import ir.skynic.bookshop.model.Book;
-import ir.skynic.bookshop.presenter.SearchPresenter;
 import ir.skynic.bookshop.view.BookView;
 
 public class SearchFragment extends Fragment {
