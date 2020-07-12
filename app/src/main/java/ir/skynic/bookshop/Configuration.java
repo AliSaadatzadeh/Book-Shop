@@ -4,11 +4,13 @@ package ir.skynic.bookshop;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import ir.skynic.bookshop.api.ApiClient;
+import ir.skynic.bookshop.model.Book;
 import ir.skynic.bookshop.model.Category;
 import ir.skynic.bookshop.model.City;
 
@@ -19,6 +21,7 @@ public class Configuration {
     private static Map<Integer,String> cityMap;
     private static Map<Integer,String> bookStatuses;
     private static String username = null;
+    private static List<Book> cartList = new ArrayList<>();
 
     public static void fetchCategories(RunnableParam onFinished) {
         if(categoryMap == null) {
@@ -60,6 +63,20 @@ public class Configuration {
         } else {
             onFinished.run(true);
         }
+    }
+
+    public static List<Book> getCartList() {
+        return cartList;
+    }
+
+    public static void addToCart(Book book) {
+        if (!cartList.contains(book)) {
+            Configuration.cartList.add(book);
+        }
+    }
+
+    public static void removeFromCart(Book book) {
+        Configuration.cartList.remove(book);
     }
 
     public static Map getCategories() {

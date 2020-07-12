@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 import ir.skynic.bookshop.Configuration;
 import ir.skynic.bookshop.Utils;
+import ir.skynic.bookshop.activities.MainActivity;
 import ir.skynic.bookshop.R;
 import ir.skynic.bookshop.api.ApiClient;
 import ir.skynic.bookshop.model.Book;
@@ -69,26 +71,32 @@ public class HomeFragment extends Fragment {
             } catch (Exception ignored) {}
         }).start();
 
-        String disCountedRequest[] = {"get-dis-counted", Configuration.getUsername(getActivity()), "30"};
-        ApiClient.getModel(disCountedRequest, "book", Book.class, o -> {
-            if(o != null) {
+        getTopSeller();
 
-                List<Book> bookList = (List) o[1];
+        getDisCounted();
 
-                productContainer.removeAllViews();
+        getNewProducts();
 
-                for (Book book : bookList) {
-                    BookView bookView = new BookView(getActivity(), BookView.ViewSize.SMALL, book);
-                    productContainer.addView(bookView);
-                }
+        getCategories();
+    }
 
-                productContainer.setVisibility(View.VISIBLE);
+    private void initUi() {
+        imageView = mView.findViewById(R.id.imageView);
 
-            } else {
-                Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        productContainer = mView.findViewById(R.id.lnrProductContainer);
+        mView.findViewById(R.id.relProductContainer).setVisibility(View.GONE);
 
+        userContainer = mView.findViewById(R.id.lnrUserContainer);
+        mView.findViewById(R.id.relUserContainer).setVisibility(View.GONE);
+
+        newProductContainer = mView.findViewById(R.id.lnrNewProductContainer);
+        mView.findViewById(R.id.relNewProductContainer).setVisibility(View.GONE);
+
+        categoryContainer = mView.findViewById(R.id.lnrCategoryContainer);
+        mView.findViewById(R.id.relCategoryContainer).setVisibility(View.GONE);
+    }
+
+    private void getTopSeller() {
         String userRequest[] = {"get-top-seller", Configuration.getUsername(getActivity()), "30"};
         ApiClient.getModel(userRequest, "user", User.class, o -> {
             if(o != null) {
@@ -102,13 +110,37 @@ public class HomeFragment extends Fragment {
                     userContainer.addView(userView);
                 }
 
-                userContainer.setVisibility(View.VISIBLE);
+                mView.findViewById(R.id.relUserContainer).setVisibility(View.VISIBLE);
 
             } else {
                 Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    private void getDisCounted() {
+        String disCountedRequest[] = {"get-dis-counted", Configuration.getUsername(getActivity()), "30"};
+        ApiClient.getModel(disCountedRequest, "book", Book.class, o -> {
+            if(o != null) {
+
+                List<Book> bookList = (List) o[1];
+
+                productContainer.removeAllViews();
+
+                for (Book book : bookList) {
+                    BookView bookView = new BookView(getActivity(), BookView.ViewSize.SMALL, book);
+                    productContainer.addView(bookView);
+                }
+
+                mView.findViewById(R.id.relProductContainer).setVisibility(View.VISIBLE);
+
+            } else {
+                Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getNewProducts() {
         String newProductRequest[] = {"get-book", Configuration.getUsername(getActivity())};
         ApiClient.getModel(newProductRequest, "book", Book.class, o -> {
             if(o != null) {
@@ -121,12 +153,14 @@ public class HomeFragment extends Fragment {
                     BookView bookView = new BookView(getActivity(), BookView.ViewSize.SMALL, book);
                     newProductContainer.addView(bookView);
                 }
-                newProductContainer.setVisibility(View.VISIBLE);
+                mView.findViewById(R.id.relNewProductContainer).setVisibility(View.VISIBLE);
             } else {
                 Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    private void getCategories() {
         Map categories = Configuration.getCategories();
         categoryContainer.removeAllViews();
         for (Object o : categories.keySet()) {
@@ -137,23 +171,6 @@ public class HomeFragment extends Fragment {
 
             categoryContainer.addView(categoryView);
         }
-
-        categoryContainer.setVisibility(View.VISIBLE);
-    }
-
-    private void initUi() {
-        imageView = mView.findViewById(R.id.imageView);
-
-        productContainer = mView.findViewById(R.id.lnrProductContainer);
-        productContainer.setVisibility(View.GONE);
-
-        userContainer = mView.findViewById(R.id.lnrUserContainer);
-        userContainer.setVisibility(View.GONE);
-
-        newProductContainer = mView.findViewById(R.id.lnrNewProductContainer);
-        newProductContainer.setVisibility(View.GONE);
-
-        categoryContainer = mView.findViewById(R.id.lnrCategoryContainer);
-        categoryContainer.setVisibility(View.GONE);
+        mView.findViewById(R.id.relCategoryContainer).setVisibility(View.VISIBLE);
     }
 }

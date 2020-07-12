@@ -64,6 +64,10 @@ public class ProductFragment extends Fragment {
             MainActivity.showFragment(getActivity(), new CommentsFragment());
         });
 
+        mView.findViewById(R.id.btnAddRemoveCart).setOnClickListener(view -> {
+            Configuration.addToCart(model);
+        });
+
         txtTile = mView.findViewById(R.id.txtTitle);
         txtDescription = mView.findViewById(R.id.txtDescription);
         txtPrice = mView.findViewById(R.id.txtPrice);
