@@ -43,7 +43,7 @@ public class CartFragment extends Fragment {
         bookContainer.removeAllViews();
 
         int totalPrice = 0;
-        for (Book book : Configuration.getBuys()) {
+        for (Book book : Configuration.getCartList()) {
             totalPrice += (book.getPrice() - (book.getPrice() * book.getOff() / 100));
             BookView bookView = new BookView(getActivity(), BookView.ViewSize.CART, book);
             bookView.setBtnDeleteListener(new View.OnClickListener() {

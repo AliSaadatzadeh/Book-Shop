@@ -21,7 +21,7 @@ public class Configuration {
     private static Map<Integer,String> cityMap;
     private static Map<Integer,String> bookStatuses;
     private static String username = null;
-    private static List<Book> buys = new ArrayList<>();
+    private static List<Book> cartList = new ArrayList<>();
 
     public static void fetchCategories(RunnableParam onFinished) {
         if(categoryMap == null) {
@@ -65,18 +65,18 @@ public class Configuration {
         }
     }
 
-    public static List<Book> getBuys() {
-        return buys;
+    public static List<Book> getCartList() {
+        return cartList;
     }
 
     public static void addToCart(Book book) {
-        if (!buys.contains(book)) {
-            Configuration.buys.add(book);
+        if (!cartList.contains(book)) {
+            Configuration.cartList.add(book);
         }
     }
 
     public static void removeFromCart(Book book) {
-        Configuration.buys.remove(book);
+        Configuration.cartList.remove(book);
     }
 
     public static Map getCategories() {
