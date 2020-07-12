@@ -11,7 +11,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/ripple_background"
-        android:clickable="true"
         android:onClick="showUser">
 
         <RelativeLayout
@@ -23,14 +22,14 @@
             android:padding="4dp">
 
             <ir.skynic.bookshop.view.CircleImageView
-                android:id="@+id/imgProduct"
+                android:id="@+id/imgUser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:srcCompat="@drawable/seller" />
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/txtProduct"
+            android:id="@+id/txtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rltSeller"
