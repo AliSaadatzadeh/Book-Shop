@@ -75,14 +75,12 @@ public class SplashActivity extends AppCompatActivity {
     private void showErrorIndicators() {
         lnrErrorContainer.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
-
-        test222();
     }
 
-    void test222() {
+    void test()
+    {
 
     }
-
 
     private void startNextActivity() {
         if(Configuration.getUsername(this) != null)
@@ -91,5 +89,6 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
 
         finish();
+        test();
     }
 }
