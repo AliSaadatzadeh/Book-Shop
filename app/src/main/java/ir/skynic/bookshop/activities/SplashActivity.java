@@ -76,11 +76,11 @@ public class SplashActivity extends AppCompatActivity {
         lnrErrorContainer.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
 
-        //kjgigguygfgtyfyuh
+        //sds ds dasd sd asd
     }
 
     void xx() {
-    
+
     }
 
     private void startNextActivity() {
@@ -90,5 +90,6 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
 
         finish();
+        xx();
     }
 }
