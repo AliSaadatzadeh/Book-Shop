@@ -11,6 +11,10 @@ public class User {
     private String shabaNumber;
     private int cityId;
     private String imageLink;
+    private String thumbNailImageLink;
+    private int followingCount;
+    private int followerCount;
+    private int bookCount;
 
     public User() {
 
@@ -24,16 +28,8 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getUserName() {
         return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getPhoneNumber() {
@@ -44,47 +40,35 @@ public class User {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getPostCode() {
         return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
     }
 
     public String getShabaNumber() {
         return shabaNumber;
     }
 
-    public void setShabaNumber(String shabaNumber) {
-        this.shabaNumber = shabaNumber;
-    }
-
     public int getCityId() {
         return cityId;
-    }
-
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
     }
 
     public String getImageLink() {
         return imageLink;
     }
 
-    public void setImageLink(String imageLink) {
-        this.imageLink = imageLink;
+    public int getFollowingCount() {
+        return followingCount;
     }
 
-    public boolean fetchAll() {
-        return false;
+    public int getFollowerCount() {
+        return followerCount;
     }
 
-    public boolean updateAll() {
-        return false;
+    public int getBookCount() {
+        return bookCount;
+    }
+
+    public String getThumbNailImageLink() {
+        return thumbNailImageLink;
     }
 }

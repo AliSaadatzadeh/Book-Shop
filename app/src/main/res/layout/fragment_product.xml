@@ -154,7 +154,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
-                        android:onClick="showUser"
                         app:srcCompat="@drawable/seller" />
 
                 </android.support.v7.widget.CardView>
