@@ -70,13 +70,28 @@ public class Configuration {
     }
 
     public static void addToCart(Book book) {
-        if (!cartList.contains(book)) {
-            Configuration.cartList.add(book);
+        Configuration.cartList.add(book);
+    }
+
+    public static boolean isCartExist(Book book) {
+        for (Book item : cartList) {
+            if (item.getId() == book.getId()) {
+                return true;
+            }
         }
+        return false;
     }
 
     public static void removeFromCart(Book book) {
-        Configuration.cartList.remove(book);
+        int i = 0;
+        for (Book item : cartList) {
+            if (item.getId() == book.getId()) {
+                break;
+            }
+            i++;
+        }
+        cartList.remove(i);
+//        Configuration.cartList.remove(book);
     }
 
     public static Map getCategories() {

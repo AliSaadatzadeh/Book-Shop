@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ir.skynic.bookshop.Configuration;
 import ir.skynic.bookshop.activities.MainActivity;
@@ -26,14 +27,16 @@ public class CartFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_cart, null);
 
         mView.findViewById(R.id.btnPayment).setOnClickListener(view -> {
+            if (!Configuration.getCartList().isEmpty()) {
+                InvoiceFragment invoiceFragment = new InvoiceFragment();
+                MainActivity.showFragment(getActivity(), invoiceFragment);
+            } else {
+                Toast.makeText(getActivity(), "سبد خرید شما خالی است", Toast.LENGTH_LONG).show();
+            }
 
-            InvoiceFragment invoiceFragment = new InvoiceFragment();
-
-            MainActivity.showFragment(getActivity(), invoiceFragment);
         });
 
         initUi();
-
         showInformation();
 
         return mView;
@@ -46,12 +49,9 @@ public class CartFragment extends Fragment {
         for (Book book : Configuration.getCartList()) {
             totalPrice += (book.getPrice() - (book.getPrice() * book.getOff() / 100));
             BookView bookView = new BookView(getActivity(), BookView.ViewSize.CART, book);
-            bookView.setBtnDeleteListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Configuration.removeFromCart(book);
-                    showInformation();
-                }
+            bookView.setBtnDeleteListener(view -> {
+                Configuration.removeFromCart(book);
+                showInformation();
             });
             bookContainer.addView(bookView);
         }
