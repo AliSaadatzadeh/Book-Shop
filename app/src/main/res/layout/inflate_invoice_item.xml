@@ -27,7 +27,7 @@
             android:layout_toLeftOf="@+id/crdProductImage">
 
             <TextView
-                android:id="@+id/txtTile"
+                android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/txtTile"
+                android:layout_below="@+id/txtTitle"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/irfont"
                 android:text='ارسال از "تهران"'
@@ -70,7 +70,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/txtPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"

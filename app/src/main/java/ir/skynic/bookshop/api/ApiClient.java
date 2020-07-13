@@ -144,6 +144,8 @@ public class ApiClient {
         }).start();
     }
 
+
+
     public static void executeCommandByImageUpload(Bitmap bitmap, String[] requestArray, RunnableParam onFinished) {
         new Thread(new Runnable() {
             String jsonContent;
@@ -196,6 +198,38 @@ public class ApiClient {
                         if(error.equals("0")) {
                             jsonContent = jsonObject.getJSONArray(key).toString();
                             onListReady.run(0, new Gson().fromJson(jsonContent, new ListOfJson<T>(tClass)));
+                        } else {
+                            onListReady.run(Integer.valueOf(error));
+                        }
+
+                    } catch (Exception e) {
+                        onListReady.run(null);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public static void getValue(String[] requestArray, String key, RunnableParam onListReady) {
+
+        new Thread(new Runnable() {
+            String jsonContent;
+
+            @Override
+            public void run() {
+                jsonContent =  ApiClient.getJson(requestArray);
+
+                Utils.runOnMainThread(() -> {
+                    if(jsonContent == null) {
+                        onListReady.run(null);
+                    }
+                    try {
+                        JSONObject jsonObject = new JSONObject(jsonContent);
+                        String error = jsonObject.getString("error");
+
+                        if(error.equals("0")) {
+                            String value = jsonObject.getString(key);
+                            onListReady.run(0, value);
                         } else {
                             onListReady.run(Integer.valueOf(error));
                         }

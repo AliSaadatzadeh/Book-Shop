@@ -20,7 +20,7 @@ import ir.skynic.bookshop.model.Book;
 
 public class BookView extends FrameLayout {
 
-    public enum ViewSize {SMALL, LARGE, CART}
+    public enum ViewSize {SMALL, LARGE, CART, INVOICE}
 
     private TextView txtTile;
     private TextView txtDescription;
@@ -66,6 +66,12 @@ public class BookView extends FrameLayout {
             inflate(context, R.layout.inflate_list_cart_item, this);
 
             btnDelete = findViewById(R.id.btnDelete);
+            txtCity = findViewById(R.id.txtCity);
+
+            txtCity.setText("ارسال از \"" + Configuration.getCities().get(model.getCityId()) + "\"");
+        } else if (viewSize == viewSize.INVOICE) {
+            inflate(context, R.layout.inflate_invoice_item, this);
+
             txtCity = findViewById(R.id.txtCity);
 
             txtCity.setText("ارسال از \"" + Configuration.getCities().get(model.getCityId()) + "\"");

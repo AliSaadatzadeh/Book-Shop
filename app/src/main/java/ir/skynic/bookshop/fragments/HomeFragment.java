@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import ir.skynic.bookshop.Configuration;
+import ir.skynic.bookshop.RunnableParam;
 import ir.skynic.bookshop.Utils;
 import ir.skynic.bookshop.activities.MainActivity;
 import ir.skynic.bookshop.R;
@@ -49,34 +50,28 @@ public class HomeFragment extends Fragment {
     }
 
     private void getInformation() {
-        new Thread(() -> {
-            try {
-                String viewRequest[] = {"get-view", Configuration.getUsername(getActivity())};
-                String jsonContent = ApiClient.getJson(viewRequest);
-
-                if(jsonContent != null) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(jsonContent);
-                        String error = jsonObject.getString("error");
-
-                        if(error.equals("0")) {
-                            String view = jsonObject.getJSONArray("view").getJSONObject(0).optString("viewLink");
-
+        String viewRequest[] = {"get-view", Configuration.getUsername(getActivity())};
+        ApiClient.getValue(viewRequest, "viewLink", new RunnableParam() {
+            @Override
+            public void run(Object... o) {
+                if(o != null && (int) o[0] == 0) {
+                    String view = (String) o[1];
+                    new Thread(() -> {
+                        try {
                             Bitmap bitmap = Utils.getImageFromUrl(view);
                             Utils.runOnMainThread(() -> imageView.setImageBitmap(bitmap));
-                        }
-                    } catch (Exception ignore) { }
-                }
+                        } catch (Exception ingnore) {}
+                    }).start();
 
-            } catch (Exception ignored) {}
-        }).start();
+                } else {
+                    Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         getTopSeller();
-
         getDisCounted();
-
         getNewProducts();
-
         getCategories();
     }
 
@@ -100,18 +95,15 @@ public class HomeFragment extends Fragment {
         String userRequest[] = {"get-top-seller", Configuration.getUsername(getActivity()), "30"};
         ApiClient.getModel(userRequest, "user", User.class, o -> {
             if(o != null) {
-
-                List<User> userList = (List) o[1];
-
                 userContainer.removeAllViews();
 
+                List<User> userList = (List) o[1];
                 for (User user : userList) {
                     UserView userView = new UserView(getActivity(), UserView.ViewSize.SMALL, user);
                     userContainer.addView(userView);
                 }
 
                 mView.findViewById(R.id.relUserContainer).setVisibility(View.VISIBLE);
-
             } else {
                 Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
             }
@@ -122,18 +114,15 @@ public class HomeFragment extends Fragment {
         String disCountedRequest[] = {"get-dis-counted", Configuration.getUsername(getActivity()), "30"};
         ApiClient.getModel(disCountedRequest, "book", Book.class, o -> {
             if(o != null) {
-
-                List<Book> bookList = (List) o[1];
-
                 productContainer.removeAllViews();
 
+                List<Book> bookList = (List) o[1];
                 for (Book book : bookList) {
                     BookView bookView = new BookView(getActivity(), BookView.ViewSize.SMALL, book);
                     productContainer.addView(bookView);
                 }
 
                 mView.findViewById(R.id.relProductContainer).setVisibility(View.VISIBLE);
-
             } else {
                 Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
             }
@@ -144,15 +133,14 @@ public class HomeFragment extends Fragment {
         String newProductRequest[] = {"get-book", Configuration.getUsername(getActivity())};
         ApiClient.getModel(newProductRequest, "book", Book.class, o -> {
             if(o != null) {
-
-                List<Book> bookList = (List) o[1];
-
                 newProductContainer.removeAllViews();
 
+                List<Book> bookList = (List) o[1];
                 for (Book book : bookList) {
                     BookView bookView = new BookView(getActivity(), BookView.ViewSize.SMALL, book);
                     newProductContainer.addView(bookView);
                 }
+
                 mView.findViewById(R.id.relNewProductContainer).setVisibility(View.VISIBLE);
             } else {
                 Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
