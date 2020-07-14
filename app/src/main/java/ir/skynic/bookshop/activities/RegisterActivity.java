@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import ir.skynic.bookshop.Configuration;
@@ -22,6 +23,7 @@ import ir.skynic.bookshop.R;
 import ir.skynic.bookshop.RunnableParam;
 import ir.skynic.bookshop.Utils;
 import ir.skynic.bookshop.api.ApiClient;
+import ir.skynic.bookshop.model.User;
 import ir.skynic.bookshop.view.PopupListView;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -45,8 +47,39 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         phone = getIntent().getStringExtra("phone");
+        if (phone == null) {
+            getUserInformation();
+        }
         //phone = "09142367752";
         initUi();
+    }
+
+    private void getUserInformation() {
+        progressBar.setVisibility(View.VISIBLE);
+        String request[] = {"get-user", Configuration.getUsername(this), Configuration.getUsername(this)};
+        ApiClient.getModel(request, "user", User.class, o -> {
+            if(o != null) {
+
+                List<User> userList = (List) o[1];
+                User user = userList.get(0);
+
+                new Thread(() -> {
+                    try {
+                        Bitmap bitmap = Utils.getImageFromUrl(user.getImageLink());
+                        Utils.runOnMainThread(() -> imgProfile.setImageBitmap(bitmap));
+                    } catch (Exception ingnore) {}
+                }).start();
+                edtName.setText(user.getName());
+                edtUsername.setText(user.getUserName());
+                edtAddress.setText(user.getAddress());
+                edtPostalCode.setText(user.getPostCode());
+                edtShabaCode.setText(user.getShabaNumber());
+            } else {
+                Toast.makeText(this, "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
+            }
+
+            progressBar.setVisibility(View.INVISIBLE);
+        });
     }
 
     private void initUi() {
