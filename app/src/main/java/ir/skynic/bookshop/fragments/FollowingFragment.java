@@ -2,9 +2,11 @@ package ir.skynic.bookshop.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import java.util.List;
@@ -19,6 +21,7 @@ public class FollowingFragment extends Fragment {
 
     private View mView;
     private String username;
+    private boolean isFollowingMode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,7 +29,8 @@ public class FollowingFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_following, null);
 
         initUi();
-        getInformation(false);
+        getInformation(isFollowingMode);
+
 
         return mView;
     }
@@ -34,6 +38,33 @@ public class FollowingFragment extends Fragment {
     private void initUi() {
         mView.findViewById(R.id.btnBack).setOnClickListener(view -> {
             getFragmentManager().popBackStack();
+        });
+
+        TabLayout tabLayout = mView.findViewById(R.id.tabLayout);
+        TabLayout.Tab tab = tabLayout.getTabAt(isFollowingMode ? 1 : 0);
+        tab.select();
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    getInformation(false);
+                } else if (tab.getPosition() == 1) {
+                    getInformation(true);
+                } else {
+                    getInformation(false);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
         });
     }
 
@@ -63,5 +94,9 @@ public class FollowingFragment extends Fragment {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setFollowingMode(boolean followingMode) {
+        isFollowingMode = followingMode;
     }
 }

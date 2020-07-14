@@ -58,10 +58,12 @@ public class UserProfileFragment extends Fragment {
         });
 
         mView.findViewById(R.id.lnrFollower).setOnClickListener(view -> {
+            followingFragment.setFollowingMode(false);
             MainActivity.showFragment(getActivity(), followingFragment);
         });
 
         mView.findViewById(R.id.lnrFollowing).setOnClickListener(view -> {
+            followingFragment.setFollowingMode(true);
             MainActivity.showFragment(getActivity(), followingFragment);
         });
 
