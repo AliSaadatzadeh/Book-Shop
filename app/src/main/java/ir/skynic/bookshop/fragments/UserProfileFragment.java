@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -118,24 +119,29 @@ public class UserProfileFragment extends Fragment {
             btnEditProfile.setVisibility(VISIBLE);
         }
 
-        chkFollow.setOnCheckedChangeListener((compoundButton, b) -> {
-
-            String followMode = b ? "add-following" : "remove-following";
-
-            String requests[] = {followMode, Configuration.getUsername(), model.getUserName()};
-            ApiClient.executeCommand(requests, o -> {
-                if(o != null && ((int)o[0]) == 0) {
-
-                } else {
-                    Toast.makeText(getActivity(), "خطایی رخ داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        });
+        chkFollow.setOnCheckedChangeListener(chkFollowOnCheckedChangeListener);
 
         btnEditProfile.setOnClickListener(view -> {
             startActivity(new Intent(getActivity(), RegisterActivity.class));
         });
     }
+
+    private CompoundButton.OnCheckedChangeListener chkFollowOnCheckedChangeListener = (compoundButton, b) -> {
+        String followMode = b ? "add-following" : "remove-following";
+        chkFollow.setText(b ? "دنبال شده" : "دنبال کنید");
+
+        String requests[] = {followMode, Configuration.getUsername(), model.getUserName()};
+        ApiClient.executeCommand(requests, o -> {
+            if (o != null && ((int) o[0]) == 0) {
+                int followerCount = Integer.valueOf(txtFollower.getText().toString());
+                followerCount += b ? 1 : -1;
+                txtFollower.setText(String.valueOf(followerCount));
+
+            } else {
+                Toast.makeText(getActivity(), "خطایی رخ داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    };
 
     void getUser() {
         progressBar.setVisibility(View.VISIBLE);
@@ -160,7 +166,9 @@ public class UserProfileFragment extends Fragment {
         txtFollower.setText(String.valueOf(model.getFollowerCount()));
         txtBooksCount.setText(String.valueOf(model.getBookCount()));
         if(model.isFollowing() == 1) {
+            chkFollow.setOnCheckedChangeListener(null);
             chkFollow.setChecked(true);
+            chkFollow.setOnCheckedChangeListener(chkFollowOnCheckedChangeListener);
             chkFollow.setText("دنبال شده");
         }
 
