@@ -1,6 +1,7 @@
 package ir.skynic.bookshop.fragments;
 
 import android.app.Fragment;
+import android.media.tv.TvContract;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
@@ -27,6 +29,7 @@ public class CommentsFragment extends Fragment {
     private CardView btnSend;
     private ViewGroup commentContainer;
     private EditText edtComment;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,7 +39,6 @@ public class CommentsFragment extends Fragment {
             getFragmentManager().popBackStack();
         });
 
-        bookId = 1;
         initUi();
         getComments();
         return mView;
@@ -57,7 +59,7 @@ public class CommentsFragment extends Fragment {
     }
 
     private void getComments() {
-        String request[] = {"get-comment", Configuration.getUsername(getActivity()), String.valueOf(bookId)};
+        String request[] = {"get-comment", Configuration.getUsername(getActivity()), String.valueOf(bookId), "999999999999"};
         ApiClient.getModel(request, "comment", Comment.class, o -> {
             if(o != null) {
                 commentContainer.removeAllViews();
@@ -70,6 +72,7 @@ public class CommentsFragment extends Fragment {
             } else {
                 Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
             }
+            progressBar.setVisibility(View.INVISIBLE);
         });
 
     }
@@ -78,6 +81,14 @@ public class CommentsFragment extends Fragment {
         mView.findViewById(R.id.imgSend).setOnClickListener(view -> sendComment());
         commentContainer = mView.findViewById(R.id.lnrCommentContainer);
         edtComment = mView.findViewById(R.id.edtComment);
+        progressBar = mView.findViewById(R.id.progressBar);
     }
 
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
 }

@@ -21,6 +21,12 @@ public class User {
 
     }
 
+    public User(String userName, String thumbNailImageLink, String name) {
+        this.userName = userName;
+        this.thumbNailImageLink = thumbNailImageLink;
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

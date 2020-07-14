@@ -14,6 +14,7 @@ public class Book {
     private String description;
     private String imageLink;
     private String sellerImage;
+    private String sellerName;
     private String thumbnailImageLink;
     private int bookStatus;
     private int off;
@@ -95,6 +96,14 @@ public class Book {
 
     public void setSellerImage(String userImageLink) {
         sellerImage = userImageLink;
+    }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
     }
 
     public Book() {

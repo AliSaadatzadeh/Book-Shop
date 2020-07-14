@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,9 @@ import ir.skynic.bookshop.activities.MainActivity;
 import ir.skynic.bookshop.R;
 import ir.skynic.bookshop.api.ApiClient;
 import ir.skynic.bookshop.model.Book;
+import ir.skynic.bookshop.model.Comment;
+import ir.skynic.bookshop.model.User;
+import ir.skynic.bookshop.view.CommentView;
 
 import static android.view.View.VISIBLE;
 import static android.view.View.combineMeasuredStates;
@@ -47,6 +51,8 @@ public class ProductFragment extends Fragment {
     private ViewGroup addRemoveCart;
     private TextView txtAddRemoveCart;
 
+    private ViewGroup commentContainer;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -67,7 +73,9 @@ public class ProductFragment extends Fragment {
         });
 
         mView.findViewById(R.id.btnComments).setOnClickListener(view -> {
-            MainActivity.showFragment(getActivity(), new CommentsFragment());
+            CommentsFragment commentsFragment = new CommentsFragment();
+            commentsFragment.setBookId(model.getId());
+            MainActivity.showFragment(getActivity(), commentsFragment);
         });
 
         txtTile = mView.findViewById(R.id.txtTitle);
@@ -87,6 +95,8 @@ public class ProductFragment extends Fragment {
         txtDate = mView.findViewById(R.id.txtDate);
         txtAddRemoveCart = mView.findViewById(R.id.txtAddRemoveCart);
         addRemoveCart = mView.findViewById(R.id.btnAddRemoveCart);
+
+        commentContainer = mView.findViewById(R.id.lnrCommentContainer);
 
         if (Configuration.isCartExist(model)) {
             addRemoveCart.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.finalize_cart_background));
@@ -109,6 +119,24 @@ public class ProductFragment extends Fragment {
         });
 
         showInformation();
+        getComments();
+    }
+
+    private void getComments() {
+        String request[] = {"get-comment", Configuration.getUsername(getActivity()), String.valueOf(model.getId()), "6"};
+        ApiClient.getModel(request, "comment", Comment.class, o -> {
+            if(o != null) {
+                commentContainer.removeAllViews();
+
+                List<Comment> commentList = (List) o[1];
+                for (Comment comment : commentList) {
+                    CommentView commentView = new CommentView(getActivity(), comment);
+                    commentContainer.addView(commentView);
+                }
+            } else {
+                Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void showInformation() {
@@ -138,6 +166,11 @@ public class ProductFragment extends Fragment {
                 Utils.runOnMainThread(() -> imgUser.setImageBitmap(bitmap));
             } catch (Exception ingnore) {}
         }).start();
+        imgUser.setOnClickListener(view -> {
+            UserProfileFragment userProfileFragment = new UserProfileFragment();
+            userProfileFragment.setModel(new User(model.getSeller(), model.getSellerImage(), model.getSellerName()));
+            MainActivity.showFragment(getActivity(), userProfileFragment);
+        });
 
         if(model.getOff() > 0) {
             txtOff.setText(model.getOff() + "% تخفیف");
