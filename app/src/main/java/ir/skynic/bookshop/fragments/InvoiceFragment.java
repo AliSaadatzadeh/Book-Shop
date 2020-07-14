@@ -19,6 +19,7 @@ import ir.skynic.bookshop.R;
 import ir.skynic.bookshop.RunnableParam;
 import ir.skynic.bookshop.api.ApiClient;
 import ir.skynic.bookshop.model.Book;
+import ir.skynic.bookshop.model.User;
 import ir.skynic.bookshop.view.BookView;
 
 public class InvoiceFragment extends Fragment {
@@ -28,6 +29,10 @@ public class InvoiceFragment extends Fragment {
     private TextView txtTotalPrice;
     private ViewGroup priceContainer;
 
+    private TextView txtPhoneNumber;
+    private TextView txtAddress;
+    private User user;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,12 +40,18 @@ public class InvoiceFragment extends Fragment {
         mView.findViewById(R.id.btnBack).setOnClickListener(view -> {
             getFragmentManager().popBackStack();
         });
-        mView.findViewById(R.id.btnPayment).setOnClickListener(view -> {
-            payment();
-        });
 
         initUi();
         showInformation();
+
+        mView.findViewById(R.id.btnPayment).setOnClickListener(view -> {
+            if (user.getAddress() == null || user.getPostCode() == null ||  user.getAddress().equals("") || user.getPostCode().equals("")) {
+                Toast.makeText(getActivity(), "برای خرید باید آدرس و کد پستی خود را وارد نمایید", Toast.LENGTH_LONG).show();
+            } else {
+                payment();
+            }
+
+        });
 
         return mView;
     }
@@ -56,11 +67,39 @@ public class InvoiceFragment extends Fragment {
         }
 
         txtTotalPrice.setText(totalPrice + "");
+
+        getUserInformation();
+    }
+
+    private void getUserInformation() {
+
+        String request[] = {"get-user", Configuration.getUsername(getActivity()), Configuration.getUsername(getActivity())};
+        ApiClient.getModel(request, "user", User.class, o -> {
+            if(o != null) {
+
+                List<User> userList = (List) o[1];
+                user = userList.get(0);
+
+                txtAddress.setText(user.getAddress());
+                txtPhoneNumber.setText(user.getPhoneNumber());
+                if (user.getShabaNumber() == null || user.getShabaNumber().equals("")) {
+                    Toast.makeText(getActivity(), "لطفا شماره شبای خود را وارد نمایید.", Toast.LENGTH_SHORT).show();
+                }
+
+                if (user.getPostCode() == null || user.getPostCode().equals("")) {
+                    Toast.makeText(getActivity(), "لطفا کد پستی خود را وارد نمایید.", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initUi() {
         productContainer = mView.findViewById(R.id.lnrProductContainer);
         txtTotalPrice = mView.findViewById(R.id.txtTotalPrice);
+        txtAddress = mView.findViewById(R.id.txtAddress);
+        txtPhoneNumber = mView.findViewById(R.id.txtPhoneNumber);
     }
 
     private void payment() {
