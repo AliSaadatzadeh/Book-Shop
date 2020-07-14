@@ -194,8 +194,9 @@
                         android:ems="10"
                         android:fontFamily="@font/irfont"
                         android:hint="سال انتشار"
-                        android:inputType="text"
+                        android:inputType="numberDecimal"
                         android:layoutDirection="rtl"
+                        android:maxLength="4"
                         android:paddingRight="10dp"
                         android:singleLine="true"
                         android:textColorHint="#AAA" />
