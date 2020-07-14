@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -40,6 +41,9 @@ public class FollowingFragment extends Fragment {
             getFragmentManager().popBackStack();
         });
 
+        TextView txtUsername = mView.findViewById(R.id.txtUsername);
+        txtUsername.setText("@" + username);
+
         TabLayout tabLayout = mView.findViewById(R.id.tabLayout);
         TabLayout.Tab tab = tabLayout.getTabAt(isFollowingMode ? 1 : 0);
         tab.select();
@@ -57,14 +61,10 @@ public class FollowingFragment extends Fragment {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) { }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) { }
         });
     }
 

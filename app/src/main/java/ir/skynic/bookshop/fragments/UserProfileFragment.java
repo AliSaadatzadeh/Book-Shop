@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class UserProfileFragment extends Fragment {
     private TextView txtBooksCount;
     private ImageView imgUser;
     private ProgressBar progressBar;
+    private CheckBox chkFollow;
 
     private FollowingFragment followingFragment;
 
@@ -77,6 +79,24 @@ public class UserProfileFragment extends Fragment {
 
         txtUsername.setText("@" + model.getUserName());
         txtName.setText(model.getName());
+
+        chkFollow = mView.findViewById(R.id.chkFollow);
+
+
+
+        chkFollow.setOnCheckedChangeListener((compoundButton, b) -> {
+
+            String followMode = b ? "add-following" : "remove-following";
+
+            String requests[] = {followMode, Configuration.getUsername(), model.getUserName()};
+            ApiClient.executeCommand(requests, o -> {
+                if(o != null && ((int)o[0]) == 0) {
+
+                } else {
+                    Toast.makeText(getActivity(), "خطایی رخ داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
     }
 
     void getUser() {
@@ -101,6 +121,10 @@ public class UserProfileFragment extends Fragment {
         txtFollowing.setText(String.valueOf(model.getFollowingCount()));
         txtFollower.setText(String.valueOf(model.getFollowerCount()));
         txtBooksCount.setText(String.valueOf(model.getBookCount()));
+        if(model.isFollowing() == 1) {
+            chkFollow.setChecked(true);
+            chkFollow.setText("دنبال شده");
+        }
 
         new Thread(() -> {
             try {
