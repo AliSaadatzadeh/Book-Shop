@@ -15,6 +15,7 @@ public class User {
     private int followingCount;
     private int followerCount;
     private int bookCount;
+    private int isFollowing;
 
     public User() {
 
@@ -76,5 +77,9 @@ public class User {
 
     public String getThumbNailImageLink() {
         return thumbNailImageLink;
+    }
+
+    public int isFollowing() {
+        return isFollowing;
     }
 }

@@ -1,11 +1,14 @@
 package ir.skynic.bookshop.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,10 +21,14 @@ import ir.skynic.bookshop.Configuration;
 import ir.skynic.bookshop.Utils;
 import ir.skynic.bookshop.activities.MainActivity;
 import ir.skynic.bookshop.R;
+import ir.skynic.bookshop.activities.RegisterActivity;
 import ir.skynic.bookshop.api.ApiClient;
+import ir.skynic.bookshop.model.Book;
 import ir.skynic.bookshop.model.User;
+import ir.skynic.bookshop.view.BookView;
 import ir.skynic.bookshop.view.UserView;
 
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 public class UserProfileFragment extends Fragment {
@@ -36,8 +43,11 @@ public class UserProfileFragment extends Fragment {
     private TextView txtBooksCount;
     private ImageView imgUser;
     private ProgressBar progressBar;
-
+    private CheckBox chkFollow;
     private FollowingFragment followingFragment;
+    private View btnEditProfile;
+
+    enum BookType{READY, SOLD, BOUGHT}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +58,7 @@ public class UserProfileFragment extends Fragment {
 
         initUi();
         getUser();
+        getBooks(BookType.READY);
 
         return mView;
     }
@@ -77,6 +88,53 @@ public class UserProfileFragment extends Fragment {
 
         txtUsername.setText("@" + model.getUserName());
         txtName.setText(model.getName());
+
+        TabLayout tabLayout = mView.findViewById(R.id.tabLayout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 2) {
+                    getBooks(BookType.BOUGHT);
+                } else if (tab.getPosition() == 1) {
+                    getBooks(BookType.SOLD);
+                } else {
+                    getBooks(BookType.READY);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) { }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { }
+        });
+
+
+        chkFollow = mView.findViewById(R.id.chkFollow);
+        btnEditProfile = mView.findViewById(R.id.btnEditProfile);
+
+        if(model.getUserName().equals(Configuration.getUsername())) {
+            chkFollow.setVisibility(View.GONE);
+            btnEditProfile.setVisibility(VISIBLE);
+        }
+
+        chkFollow.setOnCheckedChangeListener((compoundButton, b) -> {
+
+            String followMode = b ? "add-following" : "remove-following";
+
+            String requests[] = {followMode, Configuration.getUsername(), model.getUserName()};
+            ApiClient.executeCommand(requests, o -> {
+                if(o != null && ((int)o[0]) == 0) {
+
+                } else {
+                    Toast.makeText(getActivity(), "خطایی رخ داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+
+        btnEditProfile.setOnClickListener(view -> {
+            startActivity(new Intent(getActivity(), RegisterActivity.class));
+        });
     }
 
     void getUser() {
@@ -92,7 +150,7 @@ public class UserProfileFragment extends Fragment {
                 Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
             }
 
-            progressBar.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(INVISIBLE);
         });
     }
 
@@ -101,6 +159,10 @@ public class UserProfileFragment extends Fragment {
         txtFollowing.setText(String.valueOf(model.getFollowingCount()));
         txtFollower.setText(String.valueOf(model.getFollowerCount()));
         txtBooksCount.setText(String.valueOf(model.getBookCount()));
+        if(model.isFollowing() == 1) {
+            chkFollow.setChecked(true);
+            chkFollow.setText("دنبال شده");
+        }
 
         new Thread(() -> {
             try {
@@ -112,5 +174,32 @@ public class UserProfileFragment extends Fragment {
 
     public void setModel(User model) {
         this.model = model;
+    }
+
+    public void getBooks(BookType bookType) {
+
+        String strBookType = "1";
+        if(bookType == BookType.READY)
+            strBookType = "2";
+        else if(bookType == BookType.BOUGHT)
+            strBookType = "3";
+
+        String request[] = {"get-user-book", Configuration.getUsername(getActivity()), strBookType};
+        ApiClient.getModel(request, "book", Book.class, o -> {
+            if(o != null) {
+                List<Book> bookList = (List) o[1];
+
+                ViewGroup productContainer = mView.findViewById(R.id.productContainer);
+                productContainer.removeAllViews();
+
+                for (Book book : bookList) {
+                    BookView bookView = new BookView(getActivity(), BookView.ViewSize.LARGE, book);
+                    productContainer.addView(bookView);
+                }
+
+            } else {
+                Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
