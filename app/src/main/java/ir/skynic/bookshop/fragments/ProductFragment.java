@@ -22,6 +22,7 @@ import ir.skynic.bookshop.api.ApiClient;
 import ir.skynic.bookshop.model.Book;
 
 import static android.view.View.VISIBLE;
+import static android.view.View.combineMeasuredStates;
 
 public class ProductFragment extends Fragment {
 
@@ -35,7 +36,9 @@ public class ProductFragment extends Fragment {
     private TextView txtStatus;
     private TextView txtOff;
     private ImageView imgProduct;
+    private ImageView imgUser;
     private TextView txtCity;
+    private TextView txtUser;
     private TextView txtAuthor;
     private TextView txtTranslator;
     private TextView txtPublisher;
@@ -74,7 +77,9 @@ public class ProductFragment extends Fragment {
         txtStatus = mView.findViewById(R.id.txtStatus);
         txtOff = mView.findViewById(R.id.txtOff);
         imgProduct = mView.findViewById(R.id.imgProduct);
+        imgUser = mView.findViewById(R.id.imgUser);
         txtCity = mView.findViewById(R.id.txtCity);
+        txtUser = mView.findViewById(R.id.txtUser);
         txtAuthor = mView.findViewById(R.id.txtAuthor);
         txtTranslator = mView.findViewById(R.id.txtTranslator);
         txtPublisher = mView.findViewById(R.id.txtPublisher);
@@ -125,6 +130,14 @@ public class ProductFragment extends Fragment {
 
         String city = (String) Configuration.getCities().get(model.getCityId());
         txtCity.setText("ارسال از " + "\"" + city + "\"");
+
+        txtUser.setText(model.getSeller());
+        new Thread(() -> {
+            try {
+                Bitmap bitmap = Utils.getImageFromUrl(model.getImageLink());
+                Utils.runOnMainThread(() -> imgUser.setImageBitmap(bitmap));
+            } catch (Exception ingnore) {}
+        }).start();
 
         if(model.getOff() > 0) {
             txtOff.setText(model.getOff() + "% تخفیف");

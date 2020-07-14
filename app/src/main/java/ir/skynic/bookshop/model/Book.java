@@ -13,6 +13,7 @@ public class Book {
     private int publicationYear;
     private String description;
     private String imageLink;
+    private String sellerImage;
     private String thumbnailImageLink;
     private int bookStatus;
     private int off;
@@ -86,6 +87,14 @@ public class Book {
 
     public int getTransferring() {
         return transferring;
+    }
+
+    public String getSellerImage() {
+        return sellerImage;
+    }
+
+    public void setSellerImage(String userImageLink) {
+        sellerImage = userImageLink;
     }
 
     public Book() {

@@ -201,6 +201,7 @@ public class AddProductFragment extends Fragment {
                 }
 
                 setProgressingEnabled(false);
+                restView();
             };
 
             String requests[] = new String[]{"add-book", Configuration.getUsername(getActivity()), strTitle, strAuthor,
@@ -215,6 +216,17 @@ public class AddProductFragment extends Fragment {
 
             setProgressingEnabled(true);
         }
+    }
+
+    private void restView() {
+        edtTitle.setText("");
+        edtAuthor.setText("");
+        edtDescription.setText("");
+        edtTranslator.setText("");
+        edtPublicationYear.setText("");
+        edtPublication.setText("");
+        edtPrice.setText("");
+        sendingCost.setChecked(false);
     }
 
     private void setProgressingEnabled(boolean enabled) {
