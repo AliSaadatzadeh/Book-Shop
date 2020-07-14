@@ -1,5 +1,6 @@
 package ir.skynic.bookshop.fragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -9,17 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.List;
 import java.util.Map;
 
 import ir.skynic.bookshop.Configuration;
 import ir.skynic.bookshop.RunnableParam;
 import ir.skynic.bookshop.Utils;
-import ir.skynic.bookshop.activities.MainActivity;
 import ir.skynic.bookshop.R;
+import ir.skynic.bookshop.activities.RegisterActivity;
 import ir.skynic.bookshop.api.ApiClient;
 import ir.skynic.bookshop.model.Book;
 import ir.skynic.bookshop.model.User;
@@ -38,6 +36,8 @@ public class HomeFragment extends Fragment {
     private ViewGroup categoryContainer;
 
     private ImageView imageView;
+
+    private ImageView btnProfile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,6 +77,8 @@ public class HomeFragment extends Fragment {
 
     private void initUi() {
         imageView = mView.findViewById(R.id.imageView);
+        btnProfile = mView.findViewById(R.id.btnProfile);
+        btnProfile.setOnClickListener(view -> startActivity(new Intent(getActivity(), RegisterActivity.class)));
 
         productContainer = mView.findViewById(R.id.lnrProductContainer);
         mView.findViewById(R.id.relProductContainer).setVisibility(View.GONE);

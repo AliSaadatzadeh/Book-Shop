@@ -40,18 +40,20 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtAddress;
     private EditText edtPostalCode;
     private EditText edtShabaCode;
+    private TextView txtCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        initUi();
+
         phone = getIntent().getStringExtra("phone");
         if (phone == null) {
             getUserInformation();
         }
         //phone = "09142367752";
-        initUi();
     }
 
     private void getUserInformation() {
@@ -74,6 +76,9 @@ public class RegisterActivity extends AppCompatActivity {
                 edtAddress.setText(user.getAddress());
                 edtPostalCode.setText(user.getPostCode());
                 edtShabaCode.setText(user.getShabaNumber());
+                String value = (String) Configuration.getCities().get(user.getCityId());
+                txtCity.setText(value);
+                selectedCityId = user.getCityId();
             } else {
                 Toast.makeText(this, "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
             }
@@ -91,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtShabaCode = findViewById(R.id.edtShabaCode);
         progressBar = findViewById(R.id.progressBar);
         btnSubmit = findViewById(R.id.btnSubmit);
+        txtCity = findViewById(R.id.txtCitySelection);
 
         btnSubmit.setOnClickListener(view -> {
             submitUser();
@@ -149,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
             int key = (int) o;
             String value = (String) cities.get(key);
             popupListView.addItem(value, () -> {
-                ((TextView) findViewById(R.id.txtCitySelection)).setText(value);
+                txtCity.setText(value);
                 selectedCityId = key;
             });
         }
