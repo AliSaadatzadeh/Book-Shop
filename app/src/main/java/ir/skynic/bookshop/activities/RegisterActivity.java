@@ -27,6 +27,7 @@ import ir.skynic.bookshop.model.User;
 import ir.skynic.bookshop.view.PopupListView;
 
 public class RegisterActivity extends AppCompatActivity {
+    private boolean isEdit = false;
 
     private int selectedCityId = 0;
     private String phone;
@@ -52,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         phone = getIntent().getStringExtra("phone");
         if (phone == null) {
             getUserInformation();
+            isEdit = true;
         }
         //phone = "09142367752";
     }
@@ -79,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String value = (String) Configuration.getCities().get(user.getCityId());
                 txtCity.setText(value);
                 selectedCityId = user.getCityId();
+                phone = user.getPhoneNumber();
             } else {
                 Toast.makeText(this, "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
             }
@@ -181,27 +184,49 @@ public class RegisterActivity extends AppCompatActivity {
         else if (strShabaCode.length() > 0 && strShabaCode.length() < 24)
             Toast.makeText(RegisterActivity.this, "کد شبا وارد شده صحیح نیست!", Toast.LENGTH_SHORT).show();
         else {
-
-            RunnableParam runnableParam = o -> {
-                if (o != null) {
-                    int errorCode = (int) o[0];
-                    if(errorCode == 0) {
-                        Configuration.setUsername(RegisterActivity.this, strUsername);
-                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                        finish();
-                    } else if(errorCode == 5) {
-                        Toast.makeText(RegisterActivity.this, "متاسفانه این نام کاربری قبلا وجود دارد", Toast.LENGTH_SHORT).show();
-                    } else if(errorCode == 4) {
-                        Toast.makeText(RegisterActivity.this, "اطلاعات وارد شده نامعبتر است.", Toast.LENGTH_SHORT).show();
+            RunnableParam runnableParam;
+            String requests[];
+            if (isEdit) {
+                runnableParam = o -> {
+                    if (o != null) {
+                        int errorCode = (int) o[0];
+                        if(errorCode == 0) {
+                            Toast.makeText(RegisterActivity.this, "اطلاعات شما با موفقیت بروزرسانی شد.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "اطلاعات وارد شده نامعبتر است.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "خطایی در ثبت اطلاعات رخ داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(RegisterActivity.this, "خطایی در ثبت اطلاعات رخ داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
-                }
 
-                setProgressingEnabled(false);
-            };
+                    setProgressingEnabled(false);
+                };
 
-            String requests[] = new String[]{"create-account", strName, strUsername, phone, String.valueOf(selectedCityId), strAddress, strPostalCode, strShabaCode};
+                requests = new String[]{"edit-account", Configuration.getUsername(this), strName, strUsername, phone, String.valueOf(selectedCityId), strAddress, strPostalCode, strShabaCode};
+            } else {
+                runnableParam = o -> {
+                    if (o != null) {
+                        int errorCode = (int) o[0];
+                        if(errorCode == 0) {
+                            Configuration.setUsername(RegisterActivity.this, strUsername);
+                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                            finish();
+                        } else if(errorCode == 5) {
+                            Toast.makeText(RegisterActivity.this, "متاسفانه این نام کاربری قبلا وجود دارد", Toast.LENGTH_SHORT).show();
+                        } else if(errorCode == 4) {
+                            Toast.makeText(RegisterActivity.this, "اطلاعات وارد شده نامعبتر است.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "خطایی در ثبت اطلاعات رخ داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
+                    }
+
+                    setProgressingEnabled(false);
+                };
+
+                requests = new String[]{"create-account", strName, strUsername, phone, String.valueOf(selectedCityId), strAddress, strPostalCode, strShabaCode};
+
+            }
+
 
             if(selectedImage != null) {
                 ApiClient.executeCommandByImageUpload(selectedImage, requests, runnableParam);
