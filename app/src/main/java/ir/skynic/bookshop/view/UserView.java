@@ -39,6 +39,10 @@ public class UserView extends FrameLayout {
             txtCity.setText((String) Configuration.getCities().get(model.getCityId()));
 
             chkFollow = findViewById(R.id.chkFollow);
+
+            if(model.getUserName().equals(Configuration.getUsername()))
+                chkFollow.setVisibility(INVISIBLE);
+
             if (model.isFollowing() == 1) {
                 chkFollow.setChecked(true);
                 chkFollow.setText("دنبال شده");

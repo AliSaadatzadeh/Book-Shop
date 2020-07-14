@@ -192,6 +192,21 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
+                    <TextView
+                        android:id="@+id/btnEditProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/follow_button_background"
+                        android:fontFamily="@font/irfont"
+                        android:padding="4dp"
+                        android:text="ویرایش پروفایل"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/follow_button_color"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
                 </LinearLayout>
 
                 <android.support.v7.widget.CardView
@@ -226,6 +241,7 @@
                 android:orientation="vertical">
 
                 <android.support.design.widget.TabLayout
+                    android:id="@+id/tabLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layoutDirection="rtl"
@@ -247,10 +263,17 @@
                         android:text="خرید ها" />
                 </android.support.design.widget.TabLayout>
 
-                <include
-                    layout="@layout/inflate_list_product_item"
+                <LinearLayout
+                    android:id="@+id/productContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <include
+                        layout="@layout/inflate_list_product_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
             </LinearLayout>
 
