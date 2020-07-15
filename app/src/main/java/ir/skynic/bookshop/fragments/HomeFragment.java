@@ -91,6 +91,10 @@ public class HomeFragment extends Fragment {
 
         categoryContainer = mView.findViewById(R.id.lnrCategoryContainer);
         mView.findViewById(R.id.relCategoryContainer).setVisibility(View.GONE);
+
+        mView.findViewById(R.id.imgLogo).setOnClickListener(view -> {
+
+        });
     }
 
     private void getTopSeller() {
