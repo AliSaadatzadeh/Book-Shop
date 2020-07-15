@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import ir.skynic.bookshop.Configuration;
+import ir.skynic.bookshop.RunnableParam;
 import ir.skynic.bookshop.Utils;
 import ir.skynic.bookshop.activities.MainActivity;
 import ir.skynic.bookshop.R;
@@ -26,6 +28,7 @@ import ir.skynic.bookshop.api.ApiClient;
 import ir.skynic.bookshop.model.Book;
 import ir.skynic.bookshop.model.User;
 import ir.skynic.bookshop.view.BookView;
+import ir.skynic.bookshop.view.PopupListView;
 import ir.skynic.bookshop.view.UserView;
 
 import static android.view.View.INVISIBLE;
@@ -118,24 +121,29 @@ public class UserProfileFragment extends Fragment {
             btnEditProfile.setVisibility(VISIBLE);
         }
 
-        chkFollow.setOnCheckedChangeListener((compoundButton, b) -> {
-
-            String followMode = b ? "add-following" : "remove-following";
-
-            String requests[] = {followMode, Configuration.getUsername(), model.getUserName()};
-            ApiClient.executeCommand(requests, o -> {
-                if(o != null && ((int)o[0]) == 0) {
-
-                } else {
-                    Toast.makeText(getActivity(), "خطایی رخ داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        });
+        chkFollow.setOnCheckedChangeListener(chkFollowOnCheckedChangeListener);
 
         btnEditProfile.setOnClickListener(view -> {
             startActivity(new Intent(getActivity(), RegisterActivity.class));
         });
     }
+
+    private CompoundButton.OnCheckedChangeListener chkFollowOnCheckedChangeListener = (compoundButton, b) -> {
+        String followMode = b ? "add-following" : "remove-following";
+        chkFollow.setText(b ? "دنبال شده" : "دنبال کنید");
+
+        String requests[] = {followMode, Configuration.getUsername(), model.getUserName()};
+        ApiClient.executeCommand(requests, o -> {
+            if (o != null && ((int) o[0]) == 0) {
+                int followerCount = Integer.valueOf(txtFollower.getText().toString());
+                followerCount += b ? 1 : -1;
+                txtFollower.setText(String.valueOf(followerCount));
+
+            } else {
+                Toast.makeText(getActivity(), "خطایی رخ داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    };
 
     void getUser() {
         progressBar.setVisibility(View.VISIBLE);
@@ -160,7 +168,9 @@ public class UserProfileFragment extends Fragment {
         txtFollower.setText(String.valueOf(model.getFollowerCount()));
         txtBooksCount.setText(String.valueOf(model.getBookCount()));
         if(model.isFollowing() == 1) {
+            chkFollow.setOnCheckedChangeListener(null);
             chkFollow.setChecked(true);
+            chkFollow.setOnCheckedChangeListener(chkFollowOnCheckedChangeListener);
             chkFollow.setText("دنبال شده");
         }
 
@@ -194,12 +204,47 @@ public class UserProfileFragment extends Fragment {
 
                 for (Book book : bookList) {
                     BookView bookView = new BookView(getActivity(), BookView.ViewSize.LARGE, book);
+
+                    if(bookType == BookType.READY) {
+                        initBookMenuButton(bookView, book);
+                    }
+
                     productContainer.addView(bookView);
                 }
 
             } else {
                 Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
             }
+        });
+    }
+
+    public void initBookMenuButton(BookView bookView, Book book) {
+        bookView.setMenuButtonClickListerner(view -> {
+            PopupListView popupListView = new PopupListView(getActivity(), "انتخاب کنید");
+
+            popupListView.addItem("ویرایش", () -> {
+                AddProductFragment addProductFragment = new AddProductFragment();
+                //addProductFragment.setProductId(book.getId());
+                MainActivity.showFragment(getActivity(), addProductFragment);
+            });
+
+            popupListView.addItem("حذف", () -> {
+                String request1[] = {"remove-book", Configuration.getUsername(getActivity()), String.valueOf(book.getId())};
+                ApiClient.executeCommand(request1, o -> {
+                    if (o != null) {
+                        int errorCode = (int) o[0];
+                        if(errorCode == 0) {
+                            bookView.setVisibility(View.GONE);
+                        } else {
+                            Toast.makeText(getActivity(), "خطایی داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "خطایی داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
+
+            popupListView.show();
         });
     }
 }
