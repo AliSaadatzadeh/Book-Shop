@@ -224,7 +224,7 @@ public class UserProfileFragment extends Fragment {
 
             popupListView.addItem("ویرایش", () -> {
                 AddProductFragment addProductFragment = new AddProductFragment();
-                //addProductFragment.setProductId(book.getId());
+                addProductFragment.setProductId(book.getId());
                 MainActivity.showFragment(getActivity(), addProductFragment);
             });
 

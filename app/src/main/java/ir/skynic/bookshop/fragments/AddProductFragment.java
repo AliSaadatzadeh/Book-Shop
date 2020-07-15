@@ -71,8 +71,8 @@ public class AddProductFragment extends Fragment {
 
     private void getProductInformation() {
         progressBar.setVisibility(View.VISIBLE);
-        String request[] = {"get-book", Configuration.getUsername(getActivity()), String.valueOf(productId)};
-        ApiClient.getModel(request, "user", Book.class, o -> {
+        String request[] = {"get-user-book", Configuration.getUsername(getActivity()), "", String.valueOf(productId)};
+        ApiClient.getModel(request, "book", Book.class, o -> {
             if(o != null) {
 
                 List<Book> bookList = (List) o[1];
@@ -83,8 +83,8 @@ public class AddProductFragment extends Fragment {
                 edtDescription.setText(book.getDescription());
                 edtTranslator.setText(book.getTranslator());
                 edtPublication.setText(book.getPublisher());
-                edtPublicationYear.setText(book.getPublicationYear());
-                edtPrice.setText(book.getPrice());
+                edtPublicationYear.setText(String.valueOf(book.getPublicationYear()));
+                edtPrice.setText(String.valueOf(book.getPrice()));
                 sendingCost.setChecked(book.getTransferring() == 1);
 
                 String value = (String) Configuration.getCategories().get(book.getCategoryId());
@@ -267,7 +267,7 @@ public class AddProductFragment extends Fragment {
                     restView();
                 };
 
-                requests = new String[]{"add-book", Configuration.getUsername(getActivity()), strTitle, strAuthor,
+                requests = new String[]{"add-book", Configuration.getUsername(getActivity()), String.valueOf(productId), strTitle, strAuthor,
                         String.valueOf(selectedCategoryId), strPrice, strTranslator, strPublication, strPublicationYear,
                         String.valueOf(selectedStatusId), strDescription, String.valueOf(strSendingCost)};
             } else {
@@ -285,10 +285,9 @@ public class AddProductFragment extends Fragment {
                     }
 
                     setProgressingEnabled(false);
-                    restView();
                 };
 
-                requests = new String[]{"edit-book", Configuration.getUsername(getActivity()), strTitle, strAuthor,
+                requests = new String[]{"edit-book", Configuration.getUsername(getActivity()), String.valueOf(productId), strTitle, strAuthor,
                         String.valueOf(selectedCategoryId), strPrice, strTranslator, strPublication, strPublicationYear,
                         String.valueOf(selectedStatusId), strDescription, String.valueOf(strSendingCost)};
             }
