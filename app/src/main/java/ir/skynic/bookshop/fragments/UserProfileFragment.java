@@ -19,6 +19,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import ir.skynic.bookshop.Configuration;
+import ir.skynic.bookshop.RunnableParam;
 import ir.skynic.bookshop.Utils;
 import ir.skynic.bookshop.activities.MainActivity;
 import ir.skynic.bookshop.R;
@@ -27,6 +28,7 @@ import ir.skynic.bookshop.api.ApiClient;
 import ir.skynic.bookshop.model.Book;
 import ir.skynic.bookshop.model.User;
 import ir.skynic.bookshop.view.BookView;
+import ir.skynic.bookshop.view.PopupListView;
 import ir.skynic.bookshop.view.UserView;
 
 import static android.view.View.INVISIBLE;
@@ -202,12 +204,47 @@ public class UserProfileFragment extends Fragment {
 
                 for (Book book : bookList) {
                     BookView bookView = new BookView(getActivity(), BookView.ViewSize.LARGE, book);
+
+                    if(bookType == BookType.READY) {
+                        initBookMenuButton(bookView, book);
+                    }
+
                     productContainer.addView(bookView);
                 }
 
             } else {
                 Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
             }
+        });
+    }
+
+    public void initBookMenuButton(BookView bookView, Book book) {
+        bookView.setMenuButtonClickListerner(view -> {
+            PopupListView popupListView = new PopupListView(getActivity(), "انتخاب کنید");
+
+            popupListView.addItem("ویرایش", () -> {
+                AddProductFragment addProductFragment = new AddProductFragment();
+                //addProductFragment.setProductId(book.getId());
+                MainActivity.showFragment(getActivity(), addProductFragment);
+            });
+
+            popupListView.addItem("حذف", () -> {
+                String request1[] = {"remove-book", Configuration.getUsername(getActivity()), String.valueOf(book.getId())};
+                ApiClient.executeCommand(request1, o -> {
+                    if (o != null) {
+                        int errorCode = (int) o[0];
+                        if(errorCode == 0) {
+                            bookView.setVisibility(View.GONE);
+                        } else {
+                            Toast.makeText(getActivity(), "خطایی داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "خطایی داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
+
+            popupListView.show();
         });
     }
 }

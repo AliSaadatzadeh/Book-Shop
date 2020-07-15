@@ -98,6 +98,14 @@ public class BookView extends FrameLayout {
         });
     }
 
+    public void setMenuButtonClickListerner(View.OnClickListener onClickListener) {
+        View btnMenu = findViewById(R.id.btnMenu);
+        btnMenu.setVisibility(VISIBLE);
+        btnMenu.setOnClickListener(onClickListener);
+
+        txtStatus.setVisibility(GONE);
+    }
+
     public void setBtnDeleteListener(OnClickListener clickListener) {
         if (btnDelete != null) {
             btnDelete.setOnClickListener(clickListener);
