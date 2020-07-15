@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import ir.skynic.bookshop.Configuration;
@@ -26,6 +27,7 @@ import ir.skynic.bookshop.Utils;
 import ir.skynic.bookshop.activities.MainActivity;
 import ir.skynic.bookshop.activities.RegisterActivity;
 import ir.skynic.bookshop.api.ApiClient;
+import ir.skynic.bookshop.model.Book;
 import ir.skynic.bookshop.view.PopupListView;
 import ir.skynic.bookshop.R;
 
@@ -49,6 +51,10 @@ public class AddProductFragment extends Fragment {
     private EditText edtPublicationYear;
     private EditText edtPrice;
     private CheckBox sendingCost;
+    private TextView txtStatus;
+    private TextView txtCategory;
+
+    private int productId = -1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +63,60 @@ public class AddProductFragment extends Fragment {
 
         initUi();
 
+        if (productId != -1) {
+            getProductInformation();
+        }
         return mView;
+    }
+
+    private void getProductInformation() {
+        progressBar.setVisibility(View.VISIBLE);
+        String request[] = {"get-user-book", Configuration.getUsername(getActivity()), "", String.valueOf(productId)};
+        ApiClient.getModel(request, "book", Book.class, o -> {
+            if(o != null) {
+
+                List<Book> bookList = (List) o[1];
+                Book book = bookList.get(0);
+
+                edtTitle.setText(book.getTitle());
+                edtAuthor.setText(book.getAuthor());
+                edtDescription.setText(book.getDescription());
+                edtTranslator.setText(book.getTranslator());
+                edtPublication.setText(book.getPublisher());
+                edtPublicationYear.setText(String.valueOf(book.getPublicationYear()));
+                edtPrice.setText(String.valueOf(book.getPrice()));
+                sendingCost.setChecked(book.getTransferring() == 1);
+
+                String value = (String) Configuration.getCategories().get(book.getCategoryId());
+                txtCategory.setText(value);
+                selectedCategoryId = book.getCategoryId();
+
+                if (book.getBookStatus() == 1) {
+                    txtStatus.setText("کاملا نو");
+                    selectedStatusId = 1;
+                } else if (book.getBookStatus() == 2) {
+                    txtStatus.setText("سالم");
+                    selectedStatusId = 2;
+                } else if (book.getBookStatus() == 3) {
+                    txtStatus.setText("دچار زدگی");
+                    selectedStatusId = 3;
+                } else if (book.getBookStatus() == 3) {
+                    txtStatus.setText("بسیار استفاده شده");
+                    selectedStatusId = 3;
+                }
+
+                new Thread(() -> {
+                    try {
+                        Bitmap bitmap = Utils.getImageFromUrl(book.getImageLink());
+                        Utils.runOnMainThread(() -> imgBook.setImageBitmap(bitmap));
+                    } catch (Exception ingnore) {}
+                }).start();
+            } else {
+                Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
+            }
+
+            progressBar.setVisibility(View.GONE);
+        });
     }
 
     private void initUi() {
@@ -69,6 +128,8 @@ public class AddProductFragment extends Fragment {
         edtPublication = mView.findViewById(R.id.txtPublication);
         edtPublicationYear = mView.findViewById(R.id.txtPublicationYear);
         edtPrice = mView.findViewById(R.id.txtPrice);
+        txtStatus = mView.findViewById(R.id.txtStatusSelection);
+        txtCategory = mView.findViewById(R.id.txtCategorySelection);
 
         sendingCost = mView.findViewById(R.id.checkBoxSendingCost);
 
@@ -84,12 +145,12 @@ public class AddProductFragment extends Fragment {
             selectImage();
         });
 
-        mView.findViewById(R.id.txtCategorySelection).setOnClickListener(view -> {
+        txtCategory.setOnClickListener(view -> {
             showCategorySelectionPopup();
         });
 
 
-        mView.findViewById(R.id.txtStatusSelection).setOnClickListener(view -> {
+        txtStatus.setOnClickListener(view -> {
             showStatusSelectionPopup();
         });
     }
@@ -97,13 +158,13 @@ public class AddProductFragment extends Fragment {
     private void showStatusSelectionPopup() {
         PopupListView popupListView = new PopupListView(getActivity(), "انتخاب دسته بندی");
 
-        popupListView.addItem("کاملا نو", () -> {((TextView) mView.findViewById(R.id.txtStatusSelection)).setText("کاملا نو");
+        popupListView.addItem("کاملا نو", () -> {txtStatus.setText("کاملا نو");
             selectedStatusId = 1;});
-        popupListView.addItem("سالم", () -> {((TextView) mView.findViewById(R.id.txtStatusSelection)).setText("سالم");
+        popupListView.addItem("سالم", () -> {txtStatus.setText("سالم");
             selectedStatusId = 2;});
-        popupListView.addItem("دچار زدگی", () -> {((TextView) mView.findViewById(R.id.txtStatusSelection)).setText("دچار زدگی");
+        popupListView.addItem("دچار زدگی", () -> {txtStatus.setText("دچار زدگی");
             selectedStatusId = 3;});
-        popupListView.addItem("بسیار استفاده شده", () -> {((TextView) mView.findViewById(R.id.txtStatusSelection)).setText("بسیار استفاده شده");
+        popupListView.addItem("بسیار استفاده شده", () -> {txtStatus.setText("بسیار استفاده شده");
             selectedStatusId = 4;});
 
         popupListView.show();
@@ -134,7 +195,7 @@ public class AddProductFragment extends Fragment {
             int key = (int) o;
             String value = (String) categories.get(key);
             popupListView.addItem(value, () -> {
-                ((TextView) mView.findViewById(R.id.txtCategorySelection)).setText(value);
+                txtCategory.setText(value);
                 selectedCategoryId = key;
             });
         }
@@ -186,27 +247,51 @@ public class AddProductFragment extends Fragment {
         else if (strPublicationYear.length() > 0 && strPublicationYear.length() < 4)
             Toast.makeText(getActivity(), "سال انتشارات وارد شده صحیح نیست!", Toast.LENGTH_SHORT).show();
         else {
-
-            RunnableParam runnableParam = o -> {
-                if (o != null) {
-                    int errorCode = (int) o[0];
-                    if(errorCode == 0) {
-                        Toast.makeText(getActivity(), "کتاب شما ثبت شد.", Toast.LENGTH_SHORT).show();
-                        getFragmentManager().popBackStack();
+            RunnableParam runnableParam;
+            String requests[];
+            if (productId == -1) {
+                runnableParam = o -> {
+                    if (o != null) {
+                        int errorCode = (int) o[0];
+                        if(errorCode == 0) {
+                            Toast.makeText(getActivity(), "کتاب شما ثبت شد.", Toast.LENGTH_SHORT).show();
+                            getFragmentManager().popBackStack();
+                        } else {
+                            Toast.makeText(getActivity(), "اطلاعات وارد شده نامعبتر است.", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(getActivity(), "اطلاعات وارد شده نامعبتر است.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "خطایی در ثبت اطلاعات رخ داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(getActivity(), "خطایی در ثبت اطلاعات رخ داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
-                }
 
-                setProgressingEnabled(false);
-                restView();
-            };
+                    setProgressingEnabled(false);
+                    restView();
+                };
 
-            String requests[] = new String[]{"add-book", Configuration.getUsername(getActivity()), strTitle, strAuthor,
-                    String.valueOf(selectedCategoryId), strPrice, strTranslator, strPublication, strPublicationYear,
-                    String.valueOf(selectedStatusId), strDescription, String.valueOf(strSendingCost)};
+                requests = new String[]{"add-book", Configuration.getUsername(getActivity()), String.valueOf(productId), strTitle, strAuthor,
+                        String.valueOf(selectedCategoryId), strPrice, strTranslator, strPublication, strPublicationYear,
+                        String.valueOf(selectedStatusId), strDescription, String.valueOf(strSendingCost)};
+            } else {
+                runnableParam = o -> {
+                    if (o != null) {
+                        int errorCode = (int) o[0];
+                        if(errorCode == 0) {
+                            Toast.makeText(getActivity(), "تغییرات شما با موفقیت ثبت شد.", Toast.LENGTH_SHORT).show();
+                            getFragmentManager().popBackStack();
+                        } else {
+                            Toast.makeText(getActivity(), "اطلاعات وارد شده نامعبتر است.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "خطایی در ثبت اطلاعات رخ داده است. لطفا دوباره سعی کنید.", Toast.LENGTH_SHORT).show();
+                    }
+
+                    setProgressingEnabled(false);
+                };
+
+                requests = new String[]{"edit-book", Configuration.getUsername(getActivity()), String.valueOf(productId), strTitle, strAuthor,
+                        String.valueOf(selectedCategoryId), strPrice, strTranslator, strPublication, strPublicationYear,
+                        String.valueOf(selectedStatusId), strDescription, String.valueOf(strSendingCost)};
+            }
+
 
             if(selectedImage != null) {
                 ApiClient.executeCommandByImageUpload(selectedImage, requests, runnableParam);
@@ -232,5 +317,9 @@ public class AddProductFragment extends Fragment {
     private void setProgressingEnabled(boolean enabled) {
         progressBar.setVisibility(enabled ? View.VISIBLE : View.GONE);
         btnSubmit.setEnabled(!enabled);
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }
