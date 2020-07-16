@@ -1,65 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="-100dp">
 
-    <ScrollView
-        android:id="@+id/scrComments"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/rltNewComment"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#FFF">
+        android:background="@android:color/white">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/irfont"
+            android:text="قوانین"
+            android:textColor="@color/colorForeground"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="-1dp"
-                android:layout_marginRight="-1dp"
-                android:layout_marginTop="-1dp"
-                android:background="@drawable/navigation_bar_background">
-
-                <ImageView
-                    android:id="@+id/btnBack"
-                    android:layout_width="55dp"
-                    android:layout_height="60dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:background="@drawable/ripple_background"
-                    android:clickable="true"
-                    android:padding="16dp"
-                    android:rotation="180"
-                    android:tint="@color/colorForeground"
-                    app:srcCompat="@drawable/arrow2" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/irfont"
-                    android:text="قوانین"
-                    android:textColor="@color/colorForeground"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
+            android:layout_below="@+id/txtTitle">
 
             <LinearLayout
-                android:id="@+id/lnrCommentContainer"
+                android:id="@+id/lnrList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txtContent"
+                    android:id="@+id/txtContent2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
@@ -176,9 +154,17 @@
 در صورت ایجاد مزاحمت برای شما، می‌توانید با مراجعه به سایت پلیس فتا،‌ از اطلاعات تماس پلیس فتای محل سکونت خود آگاه شده و موضوع را از آن طریق پیگیری کنید.
                     "
                     android:textStyle="bold" />
+
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="قوانین را خواندم و قبول دارم."
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
+        </ScrollView>
 
-        </LinearLayout>
-    </ScrollView>
-
+    </RelativeLayout>
 </RelativeLayout>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,14 @@ import ir.skynic.bookshop.Configuration;
 import ir.skynic.bookshop.RunnableParam;
 import ir.skynic.bookshop.Utils;
 import ir.skynic.bookshop.R;
+import ir.skynic.bookshop.activities.MainActivity;
 import ir.skynic.bookshop.activities.RegisterActivity;
 import ir.skynic.bookshop.api.ApiClient;
 import ir.skynic.bookshop.model.Book;
 import ir.skynic.bookshop.model.User;
 import ir.skynic.bookshop.view.BookView;
 import ir.skynic.bookshop.view.CategoryView;
+import ir.skynic.bookshop.view.PopupListView;
 import ir.skynic.bookshop.view.UserView;
 
 
@@ -92,8 +95,29 @@ public class HomeFragment extends Fragment {
         categoryContainer = mView.findViewById(R.id.lnrCategoryContainer);
         mView.findViewById(R.id.relCategoryContainer).setVisibility(View.GONE);
 
-        mView.findViewById(R.id.imgLogo).setOnClickListener(view -> {
+        mView.findViewById(R.id.imgMenu).setOnClickListener(view -> {
+            PopupListView popupListView = new PopupListView(getActivity(), "منو");
 
+            popupListView.addItem("ویرایش پروفایل", () -> {
+                startActivity(new Intent(getActivity(), RegisterActivity.class));
+            });
+
+            popupListView.addItem("قوانین", () -> {
+                ContentFragment contentFragment = new ContentFragment();
+                MainActivity.showFragment(getActivity(), contentFragment);
+            });
+
+            popupListView.addItem("درباره ما", () -> {
+                AboutUsFragment aboutUsFragment = new AboutUsFragment();
+                MainActivity.showFragment(getActivity(), aboutUsFragment);
+            });
+
+            popupListView.addItem("خروج", () -> {
+                Configuration.unSetUsername(getActivity());
+                getActivity().finish();
+            });
+
+            popupListView.show();
         });
     }
 

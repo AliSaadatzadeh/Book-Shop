@@ -1,5 +1,6 @@
 package ir.skynic.bookshop.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -42,6 +44,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtPostalCode;
     private EditText edtShabaCode;
     private TextView txtCity;
+
+    private boolean isAcceptedRules = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +171,31 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void submitUser() {
+        if (!isEdit && !isAcceptedRules) {
+            View view = getLayoutInflater().inflate(R.layout.dialog_content, null);
+            view.findViewById(R.id.txtContent);
+
+            CheckBox checkBox = view.findViewById(R.id.checkBox);
+            checkBox.setOnClickListener(view1 -> {
+                isAcceptedRules = checkBox.isChecked();
+
+                if (isAcceptedRules)
+                    submitUser();
+            });
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setView(view);
+
+            AlertDialog mAlertDialog = alertDialogBuilder.create();
+            mAlertDialog.setCanceledOnTouchOutside(true);
+            mAlertDialog.show();
+
+            return;
+        }
+
+//        int ii = 0;
+//        if (ii == 0) return;
+
         String strName = edtName.getText().toString();
         String strUsername = edtUsername.getText().toString();
         String strAddress = edtAddress.getText().toString();
