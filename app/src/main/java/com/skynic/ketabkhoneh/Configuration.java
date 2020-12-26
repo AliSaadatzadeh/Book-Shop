@@ -125,6 +125,13 @@ public class Configuration {
         return username;
     }
 
+    public static void unSetUsername(Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences("settings", MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.apply();
+    }
     public static void setUsername(Context context, String username) {
         SharedPreferences sharedPref = context.getSharedPreferences("settings", MODE_PRIVATE);
 
