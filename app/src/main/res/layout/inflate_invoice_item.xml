@@ -33,7 +33,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/irfont"
-                android:text="کتاب نمونه"
                 android:textColor="@color/colorForeground"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -46,7 +45,6 @@
                 android:layout_below="@+id/txtTitle"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/irfont"
-                android:text='ارسال از "تهران"'
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -76,7 +74,6 @@
                     android:layout_marginLeft="2dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/irfont"
-                    android:text="18,000"
                     android:textColor="@color/colorForeground"
                     android:textSize="18sp"
                     android:textStyle="bold" />

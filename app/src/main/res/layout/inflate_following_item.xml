@@ -63,7 +63,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/irfont"
-                android:text="علی سعادت زاده"
                 android:textAlignment="textEnd"
                 android:textColor="@color/colorForeground"
                 android:textSize="16sp"
@@ -75,7 +74,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:fontFamily="@font/irfont"
-                android:text="ارومیه"
                 android:textColor="@color/colorForeground" />
         </LinearLayout>
     </RelativeLayout>

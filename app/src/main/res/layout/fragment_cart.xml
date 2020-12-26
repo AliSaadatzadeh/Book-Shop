@@ -50,22 +50,7 @@
                 android:paddingBottom="80dp">
 
                 <include
-                    layout="@layout/inflate_list_cart_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <include
-                    layout="@layout/inflate_list_cart_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <include
-                    layout="@layout/inflate_list_cart_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <include
-                    layout="@layout/inflate_list_cart_item"
+                    layout="@layout/inflate_oops"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -130,7 +115,7 @@
                     android:layout_marginLeft="2dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/irfont"
-                    android:text="18,000"
+                    android:text="0"
                     android:textColor="#FFF"
                     android:textSize="18sp"
                     android:textStyle="bold" />

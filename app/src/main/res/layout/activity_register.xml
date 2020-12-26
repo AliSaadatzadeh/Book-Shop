@@ -46,6 +46,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/txtTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -293,6 +294,27 @@
                     android:text="IR-"
                     android:textStyle="bold" />
             </RelativeLayout>
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:background="#EEE" />
+
+            <Button
+                android:id="@+id/btnLogout"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/finalize_cart_background"
+                android:fontFamily="@font/irfont"
+                android:text="خروج از حساب کاربری"
+                android:textColor="#FFF"
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
         </LinearLayout>
     </ScrollView>

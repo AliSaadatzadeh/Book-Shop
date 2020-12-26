@@ -135,7 +135,6 @@
                             android:paddingLeft="12dp"
                             android:paddingRight="12dp"
                             android:paddingTop="4dp"
-                            android:text="دسته بندی: رمان"
                             android:textColor="@color/colorForeground"
                             android:textStyle="bold" />
 
@@ -149,7 +148,6 @@
                             android:paddingLeft="12dp"
                             android:paddingRight="12dp"
                             android:paddingTop="4dp"
-                            android:text="شهر: ارومیه"
                             android:textColor="@color/colorForeground"
                             android:textStyle="bold" />
                     </LinearLayout>

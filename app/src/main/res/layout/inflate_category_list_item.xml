@@ -22,7 +22,6 @@
             android:fontFamily="@font/irfont"
             android:gravity="center_vertical"
             android:paddingRight="16dp"
-            android:text="نمونه دسته"
             android:textColor="@color/colorForeground"
             android:textSize="16sp"
             android:textStyle="bold" />

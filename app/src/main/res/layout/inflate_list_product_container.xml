@@ -53,7 +53,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="6dp"
             android:fontFamily="@font/irfont"
-            android:text="نمونه کتاب"
             android:textColor="@color/colorForeground"
             android:textStyle="bold" />
 
@@ -81,7 +80,6 @@
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/irfont"
-                android:text="18,000"
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold" />
         </LinearLayout>

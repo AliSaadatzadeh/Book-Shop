@@ -45,7 +45,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/irfont"
-                    android:text="@ali.saadatzadeh"
                     android:textAllCaps="false"
                     android:textColor="@color/colorForeground"
                     android:textSize="18sp"
@@ -83,35 +82,6 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <include
-                        layout="@layout/inflate_following_item"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <include
-                        layout="@layout/inflate_following_item"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <include
-                        layout="@layout/inflate_following_item"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <include
-                        layout="@layout/inflate_following_item"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <include
-                        layout="@layout/inflate_following_item"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <include
-                        layout="@layout/inflate_following_item"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
             </LinearLayout>

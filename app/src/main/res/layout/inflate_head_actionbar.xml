@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/imgLogo"
             android:fontFamily="@font/irfont"
-            android:text="بـوک شـاپ"
+            android:text="کــتابخونه"
             android:textColor="#FFF"
             android:textSize="26sp"
             android:textStyle="bold" />

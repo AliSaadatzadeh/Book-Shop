@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/irfont"
-            android:text="به بوک شاپ خوش اومدید!"
+            android:text="به کــتابخونه خوش اومدید!"
             android:textColor="@color/colorForeground"
             android:textSize="18sp"
             android:textStyle="bold" />

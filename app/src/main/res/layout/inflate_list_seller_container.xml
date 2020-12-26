@@ -20,7 +20,7 @@
             android:layout_centerHorizontal="true"
             android:padding="4dp">
 
-            <ir.skynic.bookshop.view.CircleImageView
+            <com.skynic.ketabkhoneh.view.CircleImageView
                 android:id="@+id/imgUser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

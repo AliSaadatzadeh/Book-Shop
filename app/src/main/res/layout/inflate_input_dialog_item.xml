@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="-2dp"
+        android:layout_marginRight="-2dp"
+        android:layout_marginTop="-2dp"
+        android:background="@drawable/navigation_bar_background">
+
+        <EditText
+            android:id="@+id/edtInput"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/textfiled_background"
+            android:ems="10"
+            android:inputType="number"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btnDone"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_below="@+id/edtInput"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/add_to_cart_background"
+            android:fontFamily="@font/irfont"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="تایید"
+            android:textColor="#FFF"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</RelativeLayout>

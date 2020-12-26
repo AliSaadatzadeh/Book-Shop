@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/irfont"
-                android:text="سینا مهری"
+                android:textAlignment="textEnd"
                 android:textColor="@color/colorForeground"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -39,7 +39,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/irfont"
-                android:text="با سلام کتاب خیلی خوبیه"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 

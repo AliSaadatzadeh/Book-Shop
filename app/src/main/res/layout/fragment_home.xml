@@ -50,6 +50,7 @@
                 android:layout_marginTop="16dp">
 
                 <TextView
+                    android:id="@+id/btnShowAllOff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -89,23 +90,6 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
 
-                        <include
-                            layout="@layout/inflate_list_product_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_product_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_product_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
                     </LinearLayout>
                 </HorizontalScrollView>
 
@@ -143,53 +127,6 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
 
-                        <include
-                            layout="@layout/inflate_list_seller_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_seller_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_seller_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_seller_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_seller_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_seller_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_seller_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_seller_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
                     </LinearLayout>
                 </HorizontalScrollView>
 
@@ -202,6 +139,7 @@
                 android:layout_marginTop="16dp">
 
                 <TextView
+                    android:id="@+id/btnShowAllNew"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -241,23 +179,6 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
 
-                        <include
-                            layout="@layout/inflate_list_product_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_product_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_product_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
                     </LinearLayout>
                 </HorizontalScrollView>
 
@@ -293,35 +214,6 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
 
-                        <include
-                            layout="@layout/inflate_list_category_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_category_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_category_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_category_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <include
-                            layout="@layout/inflate_list_category_container"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
                     </LinearLayout>
                 </HorizontalScrollView>
 

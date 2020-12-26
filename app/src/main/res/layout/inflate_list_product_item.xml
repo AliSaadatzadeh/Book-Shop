@@ -70,7 +70,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/irfont"
-                android:text="18,000"
+                android:text=" "
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/irfont"
                 android:gravity="right"
-                android:text="کتاب نمونه"
+                android:text=" "
                 android:textColor="@color/colorForeground"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/irfont"
                 android:gravity="right"
-                android:text="این شرح کتاب می باشد..."
+                android:text=" "
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -113,7 +113,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/irfont"
                 android:gravity="right"
-                android:text='در دسته "رمان"'
+                android:text=" "
                 android:textColor="#19739c"
                 android:textSize="12sp" />
         </LinearLayout>

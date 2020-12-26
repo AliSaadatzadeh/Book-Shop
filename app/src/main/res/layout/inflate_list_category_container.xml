@@ -21,7 +21,6 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="4dp"
-            android:text="نمونه دسته"
             android:textColor="@color/colorForeground"
             android:textStyle="bold" />
 
