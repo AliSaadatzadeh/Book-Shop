@@ -59,7 +59,7 @@ public class SearchFilterFragment extends Fragment {
         mView.findViewById(R.id.btnCategorySelect).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCategorySelectionPopup();
+                showCategorySelectionPopup(0);
             }
         });
 
@@ -70,7 +70,7 @@ public class SearchFilterFragment extends Fragment {
             txtCitySelection.setText((String)Configuration.getCities().get(selectedCityId));
 
         if(selectedCategoryId > 0)
-            txtCategorySelection.setText((String)Configuration.getCategories().get(selectedCategoryId));
+            txtCategorySelection.setText(((String[])Configuration.getCategories().get(selectedCategoryId))[0]);
 
         mView.findViewById(R.id.btnSubmit).setOnClickListener(view -> submit());
     }
@@ -91,17 +91,22 @@ public class SearchFilterFragment extends Fragment {
         popupListView.show();
     }
 
-    private void showCategorySelectionPopup() {
+    private void showCategorySelectionPopup(int i) {
         PopupListView popupListView = new PopupListView(getActivity(), "انتخاب دسته بندی");
 
         Map categories = Configuration.getCategories();
         for (Object o : categories.keySet()) {
             int key = (int) o;
-            String value = (String) categories.get(key);
-            popupListView.addItem(value, () -> {
-                txtCategorySelection.setText(value);
-                selectedCategoryId = key;
-            });
+            String [] values = (String[]) categories.get(key);
+            if(values[1].equals(String.valueOf(i))) {
+                popupListView.addItem(values[0], () -> {
+                    if(!Configuration.hasCategoryChild(key))
+                        showCategorySelectionPopup(key);
+
+                    txtCategorySelection.setText(values[0]);
+                    selectedCategoryId = key;
+                });
+            }
         }
 
         popupListView.show();

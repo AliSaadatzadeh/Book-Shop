@@ -192,7 +192,10 @@ public class ApiClient {
 
                 Utils.runOnMainThread(() -> {
                     if(jsonContent == null) {
-                        onListReady.run(null);
+                        try {
+                            onListReady.run(null);
+                        }
+                        catch (Exception e){}
                     }
                     try {
                         JSONObject jsonObject = new JSONObject(jsonContent);
@@ -206,7 +209,10 @@ public class ApiClient {
                         }
 
                     } catch (Exception e) {
-                        onListReady.run(null);
+                        try {
+                            onListReady.run(null);
+                        }
+                        catch (Exception e2){}
                     }
                 });
             }

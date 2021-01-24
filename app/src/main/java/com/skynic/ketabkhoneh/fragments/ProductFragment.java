@@ -153,7 +153,7 @@ public class ProductFragment extends Fragment {
 
         txtStatus.setText((String) Configuration.getBookStatuses().get(model.getBookStatus()));
 
-        String category = (String) Configuration.getCategories().get(model.getCategoryId());
+        String category = ((String[]) Configuration.getCategories().get(model.getCategoryId()))[0];
         txtCategory.setText("در دسته " + "\"" + category + "\"");
 
         String city = (String) Configuration.getCities().get(model.getCityId());

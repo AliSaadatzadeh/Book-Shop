@@ -19,6 +19,7 @@ import com.skynic.ketabkhoneh.RunnableParam;
 import com.skynic.ketabkhoneh.Utils;
 import com.skynic.ketabkhoneh.R;
 import com.skynic.ketabkhoneh.activities.MainActivity;
+import com.skynic.ketabkhoneh.activities.MenuActivity;
 import com.skynic.ketabkhoneh.activities.RegisterActivity;
 import com.skynic.ketabkhoneh.api.ApiClient;
 import com.skynic.ketabkhoneh.model.Book;
@@ -85,7 +86,6 @@ public class HomeFragment extends Fragment {
             userProfileFragment.setModel(new User(Configuration.getUsername(), "", ""));
             MainActivity.showFragment(getActivity(), userProfileFragment);
         });
-        //btnProfile.setOnClickListener(view -> startActivity(new Intent(getActivity(), RegisterActivity.class)));
 
         productContainer = mView.findViewById(R.id.lnrProductContainer);
         mView.findViewById(R.id.relProductContainer).setVisibility(View.GONE);
@@ -99,9 +99,10 @@ public class HomeFragment extends Fragment {
         categoryContainer = mView.findViewById(R.id.lnrCategoryContainer);
         mView.findViewById(R.id.relCategoryContainer).setVisibility(View.GONE);
 
-        mView.findViewById(R.id.imgLogo).setOnClickListener(view -> {
-
+        mView.findViewById(R.id.imgMenu).setOnClickListener(view -> {
+            startActivity(new Intent(getActivity(), MenuActivity.class));
         });
+
         mView.findViewById(R.id.btnShowAllOff).setOnClickListener(view -> {
             SearchFragment searchFragment = new SearchFragment();
             searchFragment.clearFilters();
@@ -179,11 +180,12 @@ public class HomeFragment extends Fragment {
         categoryContainer.removeAllViews();
         for (Object o : categories.keySet()) {
             int key = (int) o;
-            String value = (String) categories.get(key);
+            String[] value = (String[]) categories.get(key);
 
-            CategoryView categoryView = new CategoryView(getActivity(), CategoryView.ViewSize.SMALL, value, key);
-
-            categoryContainer.addView(categoryView);
+            if(value[1].equals("0")) {
+                CategoryView categoryView = new CategoryView(getActivity(), CategoryView.ViewSize.SMALL, value[0], key);
+                categoryContainer.addView(categoryView);
+            }
         }
         mView.findViewById(R.id.relCategoryContainer).setVisibility(View.VISIBLE);
     }

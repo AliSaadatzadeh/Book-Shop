@@ -57,7 +57,7 @@ public class BookView extends FrameLayout {
             }
 
             txtDescription.setText(model.getDescription());
-            String category = (String) Configuration.getCategories().get(model.getCategoryId());
+            String category = ((String[]) Configuration.getCategories().get(model.getCategoryId()))[0];
             txtCategory.setText("در دسته" + "\"" + String.valueOf(category) + "\"");
 
             if(model.getBookStatus() != 1)

@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:id="@+id/scrComments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/rltNewComment"
@@ -31,7 +30,7 @@
                     android:id="@+id/btnBack"
                     android:layout_width="55dp"
                     android:layout_height="60dp"
-                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:background="@drawable/ripple_background"
                     android:clickable="true"
@@ -41,6 +40,7 @@
                     app:srcCompat="@drawable/arrow2" />
 
                 <TextView
+                    android:id="@+id/txtTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"

@@ -113,14 +113,17 @@ public class SearchFragment extends Fragment {
         searchKeyword = "";
         categoryId = 0;
         cityId = 0;
+        request = new String[]{"get-book", Configuration.getUsername(), "", categoryId > 0 ? String.valueOf(categoryId) : "", cityId > 0 ? String.valueOf(cityId) : "", searchKeyword};
     }
 
     public void setCategory(int key) {
         categoryId = key;
+        request = new String[]{"get-book", Configuration.getUsername(), "", categoryId > 0 ? String.valueOf(categoryId) : "", cityId > 0 ? String.valueOf(cityId) : "", searchKeyword};
     }
 
     public void setCity(int key) {
         cityId = key;
+        request = new String[]{"get-book", Configuration.getUsername(), "", categoryId > 0 ? String.valueOf(categoryId) : "", cityId > 0 ? String.valueOf(cityId) : "", searchKeyword};
     }
 
     public void search() {
@@ -178,7 +181,7 @@ public class SearchFragment extends Fragment {
 
 
             if(categoryId > 0)
-                txtSelectedCategory.setText("دسته بندی: \"" + (String)Configuration.getCategories().get(categoryId) + "\"");
+                txtSelectedCategory.setText("دسته بندی: \"" + ((String[])Configuration.getCategories().get(categoryId))[0] + "\"");
             else
                 txtSelectedCategory.setVisibility(View.GONE);
 

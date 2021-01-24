@@ -201,7 +201,7 @@ public class UserProfileFragment extends Fragment {
         else if(bookType == BookType.BOUGHT)
             strBookType = "3";
 
-        String request[] = {"get-user-book", Configuration.getUsername(getActivity()), strBookType};
+        String request[] = {"get-user-book", model.getUserName(), strBookType};
         ApiClient.getModel(request, "book", Book.class, o -> {
             if(o != null) {
                 List<Book> bookList = (List) o[1];

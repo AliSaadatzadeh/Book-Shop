@@ -46,8 +46,8 @@ public class AddProductFragment extends Fragment {
 
     private View mView;
     private Bitmap selectedImage = null;
-    private int selectedCategoryId;
-    private int selectedStatusId;
+    private int selectedCategoryId = -1;
+    private int selectedStatusId = -1;
     private Uri imageUri;
 
     private Button btnSubmit;
@@ -97,7 +97,7 @@ public class AddProductFragment extends Fragment {
                 edtPrice.setText(String.valueOf(book.getPrice()));
                 sendingCost.setChecked(book.getTransferring() == 1);
 
-                String value = (String) Configuration.getCategories().get(book.getCategoryId());
+                String value = ((String[]) Configuration.getCategories().get(book.getCategoryId()))[0];
                 txtCategory.setText(value);
                 selectedCategoryId = book.getCategoryId();
 
@@ -156,7 +156,7 @@ public class AddProductFragment extends Fragment {
         });
 
         txtCategory.setOnClickListener(view -> {
-            showCategorySelectionPopup();
+            showCategorySelectionPopup(0);
         });
 
 
@@ -212,21 +212,28 @@ public class AddProductFragment extends Fragment {
     }
 
 
-    private void showCategorySelectionPopup() {
+    private void showCategorySelectionPopup(int i) {
         PopupListView popupListView = new PopupListView(getActivity(), "انتخاب دسته بندی");
 
         Map categories = Configuration.getCategories();
         for (Object o : categories.keySet()) {
             int key = (int) o;
-            String value = (String) categories.get(key);
-            popupListView.addItem(value, () -> {
-                txtCategory.setText(value);
-                selectedCategoryId = key;
-            });
+            String [] values = (String[]) categories.get(key);
+            if(values[1].equals(String.valueOf(i))) {
+                popupListView.addItem(values[0], () -> {
+                    if(!Configuration.hasCategoryChild(key))
+                        showCategorySelectionPopup(key);
+
+                    txtCategory.setText(values[0]);
+                    selectedCategoryId = key;
+                });
+            }
         }
 
         popupListView.show();
     }
+
+
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
@@ -275,14 +282,14 @@ public class AddProductFragment extends Fragment {
             Toast.makeText(getActivity(), "نام نویسنده وارد شده کوتاه است", Toast.LENGTH_SHORT).show();
         else if (strDescription.length() < 10)
             Toast.makeText(getActivity(), "توضیحات وارد شده کوتاه است", Toast.LENGTH_SHORT).show();
-        else if (strTranslator.length() < 3)
-            Toast.makeText(getActivity(), "نام مترجم شده کوتاه است", Toast.LENGTH_SHORT).show();
-        else if (strPublication.length() < 3)
-            Toast.makeText(getActivity(), "نام انتشارات وارد شده کوتاه است", Toast.LENGTH_SHORT).show();
-//        else if (strPrice.length() < 3)
-//            Toast.makeText(getActivity(), "قیمت وارد شده درست نیست!", Toast.LENGTH_SHORT).show();
+        else if (strPrice.length() == 0)
+            Toast.makeText(getActivity(), "قیمت وارد شده درست نیست!", Toast.LENGTH_SHORT).show();
         else if (strPublicationYear.length() > 0 && strPublicationYear.length() < 4)
             Toast.makeText(getActivity(), "سال انتشارات وارد شده صحیح نیست!", Toast.LENGTH_SHORT).show();
+        else if (selectedStatusId < 0)
+            Toast.makeText(getActivity(), "وضعیت کتاب انتخاب نشده است!", Toast.LENGTH_SHORT).show();
+        else if (selectedCategoryId < 0)
+            Toast.makeText(getActivity(), "دسته بندی کتاب انتخاب نشده است!", Toast.LENGTH_SHORT).show();
         else {
             RunnableParam runnableParam;
             String requests[];

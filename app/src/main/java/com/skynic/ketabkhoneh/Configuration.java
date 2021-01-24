@@ -17,7 +17,7 @@ import com.skynic.ketabkhoneh.model.City;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Configuration {
-    private static Map<Integer,String> categoryMap;
+    private static Map<Integer,String[]> categoryMap;
     private static Map<Integer,String> cityMap;
     private static Map<Integer,String> bookStatuses;
     private static String username = null;
@@ -32,7 +32,7 @@ public class Configuration {
                     List<Category> categoryList = (List) o[1];
                     categoryMap = new LinkedHashMap<>();
                     for (Category category : categoryList) {
-                        categoryMap.put(category.getId(), category.getName());
+                        categoryMap.put(category.getId(), new String[]{ category.getName(), String.valueOf(category.getParentId()) });
                     }
                     onFinished.run(true);
                 } else {
@@ -96,6 +96,18 @@ public class Configuration {
 
     public static Map getCategories() {
         return categoryMap;
+    }
+
+    public static boolean hasCategoryChild(int mKey) {
+        Map categories = Configuration.getCategories();
+        for (Object o : categories.keySet()) {
+            int key = (int) o;
+            String[] value = (String[]) categories.get(key);
+            if(value[1].equals(String.valueOf(String.valueOf(mKey)))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static Map getCities() {
