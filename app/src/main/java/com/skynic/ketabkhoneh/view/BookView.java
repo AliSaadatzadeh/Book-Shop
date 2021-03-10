@@ -36,22 +36,22 @@ public class BookView extends FrameLayout {
     public BookView(Context context, ViewSize viewSize, Book model) {
         super(context);
 
-        if(viewSize == ViewSize.SMALL) {
+        if (viewSize == ViewSize.SMALL) {
             inflate(context, R.layout.inflate_list_product_container, this);
             txtOff = findViewById(R.id.txtOff);
 
-            if(model.getOff() > 0) {
+            if (model.getOff() > 0) {
                 txtOff.setText(model.getOff() + "%");
                 txtOff.setVisibility(VISIBLE);
             }
-        } else if(viewSize == ViewSize.LARGE) {
+        } else if (viewSize == ViewSize.LARGE) {
             inflate(context, R.layout.inflate_list_product_item, this);
             txtDescription = findViewById(R.id.txtDescription);
             txtCategory = findViewById(R.id.txtCategory);
             txtStatus = findViewById(R.id.txtStatus);
             txtOff = findViewById(R.id.txtOff);
 
-            if(model.getOff() > 0) {
+            if (model.getOff() > 0) {
                 txtOff.setText(model.getOff() + "%");
                 txtOff.setVisibility(VISIBLE);
             }
@@ -60,9 +60,9 @@ public class BookView extends FrameLayout {
             String category = ((String[]) Configuration.getCategories().get(model.getCategoryId()))[0];
             txtCategory.setText("در دسته" + "\"" + String.valueOf(category) + "\"");
 
-            if(model.getBookStatus() != 1)
+            if (model.getBookStatus() != 1)
                 txtStatus.setVisibility(INVISIBLE);
-        } else if (viewSize == viewSize.CART ) {
+        } else if (viewSize == viewSize.CART) {
             inflate(context, R.layout.inflate_list_cart_item, this);
 
             btnDelete = findViewById(R.id.btnDelete);
@@ -88,13 +88,14 @@ public class BookView extends FrameLayout {
             try {
                 Bitmap bitmap = Utils.getImageFromUrl(model.getThumbnailImageLink());
                 Utils.runOnMainThread(() -> imgProduct.setImageBitmap(bitmap));
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }).start();
 
         setOnClickListener(view -> {
             ProductFragment productFragment = new ProductFragment();
             productFragment.setModel(model);
-            MainActivity.showFragment((Activity)context, productFragment);
+            MainActivity.showFragment((Activity) context, productFragment);
         });
     }
 
@@ -111,6 +112,4 @@ public class BookView extends FrameLayout {
             btnDelete.setOnClickListener(clickListener);
         }
     }
-
-
 }

@@ -48,7 +48,7 @@ public class SmsConfirmActivity extends AppCompatActivity {
 
     private void validateConfirmCode() {
 
-        String validationCode = edtConfirmCode.getText().toString();
+        String validationCode = edtConfirmCode.getText().toString().trim();
 
         ApiClient.getModel(new String[]{"login", phone, validationCode}, "user", User.class, o -> {
             if(o != null) {

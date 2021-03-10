@@ -39,6 +39,8 @@ public class SearchFragment extends Fragment {
     private View btnClearFilters;
     private View btnClearKeyword;
 
+    private boolean canEditRequest = false;
+
     private String searchKeyword = "";
     private int cityId = 0;
     private int categoryId = 0;
@@ -132,6 +134,10 @@ public class SearchFragment extends Fragment {
 
         updateFilterViews();
 
+        if(!canEditRequest)
+            request = new String[]{"get-book", Configuration.getUsername(), "", categoryId > 0 ? String.valueOf(categoryId) : "", cityId > 0 ? String.valueOf(cityId) : "", searchKeyword};
+
+        canEditRequest = false;
 
         ApiClient.getModel(request, "book", Book.class, o -> {
             if(o != null) {
@@ -191,6 +197,7 @@ public class SearchFragment extends Fragment {
     }
 
     public void showAllOff() {
+        canEditRequest = true;
         request = new String[]{"get-dis-counted", Configuration.getUsername(), "200"};
     }
 

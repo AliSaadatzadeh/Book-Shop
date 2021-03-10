@@ -17,11 +17,13 @@ public class Book {
     private String sellerName;
     private String thumbnailImageLink;
     private int bookStatus;
+    private boolean canBuy = true;
     private int off;
     private String seller;
     private String date;
     private String trackCode;
     private int transferring;
+    private boolean isDelivered;
 
     public int getId() {
         return id;
@@ -109,6 +111,18 @@ public class Book {
 
     public String getTrackCode() {
         return trackCode;
+    }
+
+    public boolean isCanBuy() {
+        return canBuy;
+    }
+
+    public void setCanBuy(boolean canBuy) {
+        this.canBuy = canBuy;
+    }
+
+    public boolean isDelivered() {
+        return isDelivered;
     }
 
     public Book() {

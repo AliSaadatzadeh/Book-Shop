@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initUi() {
         findViewById(R.id.btnSubmit).setOnClickListener(view -> {
-            String phone = ((EditText)findViewById(R.id.edtPhone)).getText().toString();
+            String phone = ((EditText)findViewById(R.id.edtPhone)).getText().toString().trim();
 
             if(phone.length() != 11 || !phone.startsWith("09")) {
                 Toast.makeText(LoginActivity.this, "شماره تلفن صحیح نیست!", Toast.LENGTH_SHORT).show();

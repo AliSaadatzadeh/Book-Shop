@@ -82,13 +82,13 @@ public class InvoiceFragment extends Fragment {
 
                 txtAddress.setText(user.getAddress());
                 txtPhoneNumber.setText(user.getPhoneNumber());
-                if (user.getShabaNumber() == null || user.getShabaNumber().equals("")) {
-                    Toast.makeText(getActivity(), "لطفا شماره شبای خود را وارد نمایید.", Toast.LENGTH_SHORT).show();
-                }
-
-                if (user.getPostCode() == null || user.getPostCode().equals("")) {
-                    Toast.makeText(getActivity(), "لطفا کد پستی خود را وارد نمایید.", Toast.LENGTH_SHORT).show();
-                }
+//                if (user.getShabaNumber() == null || user.getShabaNumber().equals("")) {
+//                    Toast.makeText(getActivity(), "لطفا شماره شبای خود را وارد نمایید.", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                if (user.getPostCode() == null || user.getPostCode().equals("")) {
+//                    Toast.makeText(getActivity(), "لطفا کد پستی خود را وارد نمایید.", Toast.LENGTH_SHORT).show();
+//                }
 
 
             } else {

@@ -210,9 +210,15 @@ public class UserProfileFragment extends Fragment {
                 productContainer.removeAllViews();
 
                 for (Book book : bookList) {
+                    book.setCanBuy(bookType == BookType.READY);
+
                     BookView bookView = new BookView(getActivity(), BookView.ViewSize.LARGE, book);
 
-                    initBookMenuButton(bookType, bookView, book);
+                    if(model.getUserName().equals(Configuration.getUsername(getActivity()))) {
+                        initBookMenuButton(bookType, bookView, book);
+                        book.setCanBuy(false);
+                    }
+
 
                     productContainer.addView(bookView);
                 }
@@ -254,6 +260,9 @@ public class UserProfileFragment extends Fragment {
                 popupListView.show();
             });
         } else if(bookType == BookType.BOUGHT) {
+            if(book.isDelivered())
+                return;
+
             bookView.setMenuButtonClickListerner(view -> {
                 PopupListView popupListView = new PopupListView(getActivity(), "انتخاب کنید");
 
@@ -282,6 +291,9 @@ public class UserProfileFragment extends Fragment {
                 popupListView.show();
             });
         } else if(bookType == BookType.SOLD) {
+            if(book.isDelivered())
+                return;
+
             bookView.setMenuButtonClickListerner(view -> {
                 PopupListView popupListView = new PopupListView(getActivity(), "انتخاب کنید");
 
@@ -310,10 +322,6 @@ public class UserProfileFragment extends Fragment {
                             Toast.makeText(getActivity(), "خطایی پیش آمد... لطفا دوباره امتحان کنید.", Toast.LENGTH_SHORT).show();
                         }
                     });
-
-
-
-
                 });
 
                 popupListView.addItem("وارد کردن کد رهگیری", () -> {

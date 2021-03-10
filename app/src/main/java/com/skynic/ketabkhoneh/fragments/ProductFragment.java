@@ -118,6 +118,9 @@ public class ProductFragment extends Fragment {
             }
         });
 
+        if(!model.isCanBuy())
+            addRemoveCart.setVisibility(View.INVISIBLE);
+
         showInformation();
         getComments();
     }
